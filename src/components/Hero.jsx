@@ -245,25 +245,25 @@ export default function Hero({ onSearch, onSelectCategory, onOpenAuth }) {
                 </button>
               </div>
 
-              {/* Floating Badge 1: Escrow Milestone Guarantee */}
-              <div className="absolute -top-6 -left-6 z-30 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-soft-lg border border-slate-200/80 hidden sm:flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-brand-600">
-                  <ShieldCheck className="w-6 h-6" />
+              {/* Floating Badge 1: Escrow Milestone Guarantee (Positioned top-right so it never overlaps avatar/name) */}
+              <div className="absolute -top-5 -right-3 sm:-top-6 sm:-right-4 z-30 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-soft-lg border border-slate-200/80 hidden sm:flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-brand-100 flex items-center justify-center text-brand-600 shrink-0">
+                  <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-slate-900">Protected Escrow</p>
-                  <p className="text-[11px] text-slate-500">Funds released on approval</p>
+                  <p className="text-xs font-bold text-slate-900 leading-tight">Protected Escrow</p>
+                  <p className="text-[10px] text-slate-500">Funds released on approval</p>
                 </div>
               </div>
 
-              {/* Floating Badge 2: Quick Turnaround */}
-              <div className="absolute -bottom-6 -right-4 z-30 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-soft-lg border border-slate-200/80 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
-                  <Zap className="w-5 h-5 fill-amber-500" />
+              {/* Floating Badge 2: Quick Turnaround (Positioned bottom-left for perfect balance) */}
+              <div className="absolute -bottom-5 -left-3 sm:-bottom-6 sm:-left-4 z-30 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-soft-lg border border-slate-200/80 flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
+                  <Zap className="w-4 h-4 fill-amber-500" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-slate-900">48h Average Match</p>
-                  <p className="text-[11px] text-slate-500">From brief to interview</p>
+                  <p className="text-xs font-bold text-slate-900 leading-tight">48h Average Match</p>
+                  <p className="text-[10px] text-slate-500">From brief to interview</p>
                 </div>
               </div>
 
