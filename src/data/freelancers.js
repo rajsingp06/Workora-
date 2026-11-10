@@ -1,0 +1,140 @@
+export const featuredFreelancersData = [
+  {
+    id: 'elena-rostova',
+    name: 'Elena Rostova',
+    title: 'Senior Product Designer & Design Systems Lead',
+    category: 'ui-ux',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
+    location: 'Berlin, Germany',
+    hourlyRate: 95,
+    rating: 4.98,
+    reviewsCount: 142,
+    completedProjects: 87,
+    badges: ['Top Rated Plus', 'Verified Pro'],
+    skills: ['Figma', 'Design Systems', 'SaaS UX', 'User Research', 'Prototyping'],
+    bio: 'Ex-fintech Lead Designer dedicated to building high-converting, human-centered digital experiences. I specialize in scalable design systems, multi-platform SaaS interfaces, and rapid interactive prototypes.',
+    recentWork: [
+      { title: 'Fintech Dashboard Overhaul', result: '+42% user retention', tags: ['Figma', 'Design System'] },
+      { title: 'Telehealth Patient Portal', result: '99.2% usability score', tags: ['Mobile UX', 'Accessibility'] }
+    ],
+    availability: 'Available (approx. 20 hrs/week)',
+    responseRate: '< 1 hour',
+    testimonial: 'Elena transformed our complex data engine into the cleanest UI in our niche. Truly exceptional talent.'
+  },
+  {
+    id: 'marcus-vance',
+    name: 'Marcus Vance',
+    title: 'Full-Stack AI & Cloud Architect',
+    category: 'web-dev',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80',
+    location: 'San Francisco, CA',
+    hourlyRate: 120,
+    rating: 5.0,
+    reviewsCount: 98,
+    completedProjects: 64,
+    badges: ['Top Rated Plus', 'AI Specialist'],
+    skills: ['React / Next.js', 'Python', 'LangChain', 'Node.js', 'AWS', 'PostgreSQL'],
+    bio: 'Crafting resilient enterprise web applications and custom generative AI integrations. 9+ years delivering production software with zero-downtime architectures and snappy frontends.',
+    recentWork: [
+      { title: 'Enterprise RAG Search Engine', result: '10x search speedup', tags: ['Python', 'Vector DB', 'Next.js'] },
+      { title: 'Real-time Collaborative Canvas', result: '100k concurrent users', tags: ['WebSockets', 'React'] }
+    ],
+    availability: 'Available for contract',
+    responseRate: '< 30 mins',
+    testimonial: 'Marcus delivered our entire AI pipeline two weeks ahead of schedule. Flawless code quality.'
+  },
+  {
+    id: 'sophia-chen',
+    name: 'Sophia Chen',
+    title: 'Brand Identity Strategist & Art Director',
+    category: 'graphic-design',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=800&q=80',
+    location: 'Vancouver, Canada',
+    hourlyRate: 85,
+    rating: 4.96,
+    reviewsCount: 180,
+    completedProjects: 112,
+    badges: ['Top Rated', 'Brand Authority'],
+    skills: ['Brand Strategy', 'Logo Design', 'Visual Guidelines', 'Packaging', 'Typography'],
+    bio: 'Bridging strategic business goals and emotive visual design. I have guided 40+ early-stage startups and established brands from naming to full design language rollouts.',
+    recentWork: [
+      { title: 'CleanTech Global Rebrand', result: 'Featured in BrandNew', tags: ['Identity', 'Packaging'] },
+      { title: 'AI Developer Studio Identity', result: 'Complete Brand Guidelines', tags: ['Typography', 'Logomark'] }
+    ],
+    availability: 'Booking for next month',
+    responseRate: '< 2 hours',
+    testimonial: 'Sophia gave our company an identity we are proud to stand behind. Worth every penny.'
+  },
+  {
+    id: 'tariq-al-mansoor',
+    name: 'Tariq Al-Mansoor',
+    title: 'Senior Mobile Engineer (iOS & React Native)',
+    category: 'mobile-dev',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80',
+    location: 'London, United Kingdom',
+    hourlyRate: 105,
+    rating: 4.97,
+    reviewsCount: 83,
+    completedProjects: 51,
+    badges: ['Top Rated Plus', 'Mobile Architect'],
+    skills: ['React Native', 'SwiftUI', 'Mobile Security', 'Offline-First', 'TypeScript'],
+    bio: 'Building fluid, high-performance mobile apps with strict attention to micro-animations and battery efficiency. Over 3.2M cumulative downloads across products I have built.',
+    recentWork: [
+      { title: 'Neobank iOS / Android Client', result: '4.9 App Store rating', tags: ['React Native', 'Biometrics'] },
+      { title: 'Mindfulness & Audio Player', result: '60fps smooth audio player', tags: ['SwiftUI', 'CoreAudio'] }
+    ],
+    availability: 'Available for select projects',
+    responseRate: '< 1 hour',
+    testimonial: 'Tariq builds apps that feel like Apple built them internally. Incredibly talented engineer.'
+  },
+  {
+    id: 'maya-lindqvist',
+    name: 'Maya Lindqvist',
+    title: 'Growth Marketer & Technical SEO Specialist',
+    category: 'digital-marketing',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    location: 'Stockholm, Sweden',
+    hourlyRate: 80,
+    rating: 4.95,
+    reviewsCount: 115,
+    completedProjects: 76,
+    badges: ['Top Rated', 'Growth Expert'],
+    skills: ['Technical SEO', 'Conversion Rate Optimization', 'Paid Acquisition', 'GA4 Analytics', 'Growth Loops'],
+    bio: 'Data-driven growth strategist. I engineer predictable organic acquisition channels and systematically eliminate conversion friction in onboarding and signup flows.',
+    recentWork: [
+      { title: 'B2B SaaS Organic Scaling', result: '310% MRR growth in 8 mo', tags: ['Technical SEO', 'Content Strategy'] },
+      { title: 'E-commerce Checkout CRO', result: '+28% checkout conversion', tags: ['A/B Testing', 'Funnel Analysis'] }
+    ],
+    availability: 'Available (15 hrs/week)',
+    responseRate: '< 3 hours',
+    testimonial: 'Maya does not just advise; she builds experiments that predictably generate revenue.'
+  },
+  {
+    id: 'julian-bennett',
+    name: 'Julian Bennett',
+    title: 'Lead Motion Designer & 3D Visualizer',
+    category: 'video-editing',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80',
+    location: 'Melbourne, Australia',
+    hourlyRate: 90,
+    rating: 4.99,
+    reviewsCount: 67,
+    completedProjects: 59,
+    badges: ['Top Rated', 'Creative Vanguard'],
+    skills: ['After Effects', 'Blender 3D', 'Lottie Animations', 'Cinema 4D', 'Product Teasers'],
+    bio: 'Transforming technical products into visually captivating stories through 3D rendering and kinetic typography. Featured on Behance, Motionographer, and Awwwards.',
+    recentWork: [
+      { title: 'Hardware Product Teaser', result: '1.4M views on Twitter/X', tags: ['Blender 3D', 'Sound Design'] },
+      { title: 'Web App Micro-interaction Pack', result: '60+ lightweight Lottie files', tags: ['Lottie', 'After Effects'] }
+    ],
+    availability: 'Available immediately',
+    responseRate: '< 1 hour',
+    testimonial: 'Julian took our rough CAD files and created an Apple-grade launch video. Outstanding.'
+  }
+];
