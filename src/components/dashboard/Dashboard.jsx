@@ -48,15 +48,15 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
           <div className="flex items-center gap-3">
             <button
               onClick={() => onNavigate('landing')}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2 group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white font-extrabold text-lg shadow-brand-glow">
+              <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-extrabold text-lg shadow-brand-glow">
                 W
               </div>
               <span className="font-extrabold text-xl text-slate-900 tracking-tight">WORKORA</span>
             </button>
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold border border-slate-200 uppercase tracking-wider">
-              {isFreelancer ? 'Specialist Workspace' : 'Client Hub'}
+              {isFreelancer ? 'Specialist Workspace' : 'Client Profile & Hub'}
             </span>
           </div>
 
@@ -64,10 +64,11 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
           <div className="flex items-center gap-3 sm:gap-4">
             <button
               onClick={() => onNavigate('landing')}
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3 sm:px-3.5 py-2 rounded-xl transition-colors cursor-pointer"
+              title="Return to Marketplace Homepage"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>View Landing Page</span>
+              <span>Back to Marketplace</span>
             </button>
 
             {/* Profile Dropdown preview / avatar */}

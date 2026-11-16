@@ -17,7 +17,9 @@ import {
   Wrench, 
   Zap, 
   User, 
-  LayoutDashboard
+  LayoutDashboard,
+  Edit3,
+  LogOut
 } from 'lucide-react';
 import { categoriesData } from '../data/categories';
 import { localCategoriesData } from '../data/localServices';
@@ -28,12 +30,16 @@ export default function Navbar({
   currentUser, 
   currentView = 'landing',
   userLocation,
-  onOpenLocationModal 
+  onOpenLocationModal,
+  onLogout,
+  onEditProfile
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesDropdownOpen, setIsCategoriesDropdownOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const profileDropdownRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +54,9 @@ export default function Navbar({
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsCategoriesDropdownOpen(false);
+      }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target)) {
+        setIsProfileMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -230,21 +239,128 @@ export default function Navbar({
           {/* Far Right Corner: Auth / Profile Button */}
           <div className="flex items-center gap-2 xl:gap-3 shrink-0">
             {currentUser ? (
-              <button
-                onClick={() => onNavigate('dashboard')}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 transition-all text-xs font-bold text-slate-800 shadow-soft-sm group"
-                title="Go to your dashboard"
-              >
-                <img
-                  src={currentUser.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80'}
-                  alt={currentUser.fullName}
-                  className="w-7 h-7 rounded-full object-cover ring-1 ring-slate-200 group-hover:ring-emerald-400"
-                />
-                <span className="font-bold text-slate-900">{currentUser.fullName?.split(' ')[0] || 'User'}</span>
-                <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                  {currentUser.role === 'freelancer' ? 'Seller' : 'Buyer'}
-                </span>
-              </button>
+              <div className="relative" ref={profileDropdownRef}>
+                <div className="flex items-center rounded-full bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 transition-all text-xs font-bold text-slate-800 shadow-soft-sm group">
+                  {/* Click Profile Pill to View Profile Section */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsProfileMenuOpen(false);
+                      onNavigate('dashboard');
+                    }}
+                    className="inline-flex items-center gap-2 pl-1 pr-2 py-1 cursor-pointer focus:outline-none"
+                    title="View Profile Section & Dashboard"
+                  >
+                    <img
+                      src={currentUser.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80'}
+                      alt={currentUser.fullName}
+                      className="w-7 h-7 rounded-full object-cover ring-1 ring-slate-200 group-hover:ring-emerald-400"
+                    />
+                    <span className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                      {currentUser.fullName?.split(' ')[0] || 'User'}
+                    </span>
+                    <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                      {currentUser.role === 'freelancer' ? 'Seller' : 'Buyer'}
+                    </span>
+                  </button>
+
+                  {/* Profile Menu Toggle Chevron */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsProfileMenuOpen(!isProfileMenuOpen);
+                    }}
+                    className="pr-2.5 pl-0.5 py-1.5 text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+                    title="Account options"
+                    aria-label="Toggle profile menu"
+                  >
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isProfileMenuOpen ? 'rotate-180 text-emerald-600' : ''}`} />
+                  </button>
+                </div>
+
+                {/* Profile Dropdown Menu */}
+                {isProfileMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-2xl border border-slate-200/90 shadow-soft-xl p-3 z-50 animate-fadeIn">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsProfileMenuOpen(false);
+                        onNavigate('dashboard');
+                      }}
+                      className="w-full text-left flex items-center gap-3 p-2.5 bg-slate-50 hover:bg-emerald-50/60 rounded-xl mb-2 transition-colors group cursor-pointer border border-transparent hover:border-emerald-200"
+                    >
+                      <img
+                        src={currentUser.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80'}
+                        alt={currentUser.fullName}
+                        className="w-10 h-10 rounded-full object-cover ring-1 ring-slate-200 group-hover:ring-emerald-400"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="font-bold text-slate-900 text-xs truncate group-hover:text-emerald-700">
+                          {currentUser.fullName || 'User'}
+                        </div>
+                        <div className="text-[11px] text-slate-400 truncate">
+                          {currentUser.email}
+                        </div>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                            {currentUser.role === 'freelancer' ? 'Seller Hub' : 'Buyer Hub'}
+                          </span>
+                          <span className="text-[10px] text-emerald-600 font-bold">View Profile →</span>
+                        </div>
+                      </div>
+                    </button>
+
+                    <div className="space-y-1 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsProfileMenuOpen(false);
+                          onNavigate('dashboard');
+                        }}
+                        className="w-full text-left px-3 py-2 rounded-lg font-bold text-slate-800 hover:text-emerald-700 hover:bg-emerald-50 flex items-center gap-2 transition-colors cursor-pointer"
+                      >
+                        <User className="w-4 h-4 text-emerald-600" />
+                        <span>View Profile & Dashboard</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsProfileMenuOpen(false);
+                          if (onEditProfile) {
+                            onEditProfile();
+                          } else {
+                            onNavigate('edit-profile');
+                          }
+                        }}
+                        className="w-full text-left px-3 py-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors cursor-pointer"
+                      >
+                        <Edit3 className="w-4 h-4 text-slate-400" />
+                        <span>Edit Profile</span>
+                      </button>
+
+                      <div className="pt-1 mt-1 border-t border-slate-100">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsProfileMenuOpen(false);
+                            if (onLogout) {
+                              onLogout();
+                            } else {
+                              onNavigate('landing');
+                            }
+                          }}
+                          className="w-full text-left px-3 py-2 rounded-lg font-semibold text-rose-600 hover:bg-rose-50 flex items-center gap-2 transition-colors cursor-pointer"
+                        >
+                          <LogOut className="w-4 h-4 text-rose-500" />
+                          <span>Log Out</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <>
                 <button
@@ -314,7 +430,45 @@ export default function Navbar({
             </button>
           </div>
 
-          {!currentUser && (
+          {currentUser ? (
+            <div className="pt-3 border-t border-slate-100 space-y-2">
+              <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <img
+                    src={currentUser.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80'}
+                    alt={currentUser.fullName}
+                    className="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200"
+                  />
+                  <div className="min-w-0">
+                    <div className="font-bold text-xs text-slate-900 truncate">{currentUser.fullName}</div>
+                    <div className="text-[10px] text-emerald-700 font-black uppercase">
+                      {currentUser.role === 'freelancer' ? 'Seller Hub' : 'Buyer Hub'}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onNavigate('dashboard');
+                  }}
+                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer"
+                >
+                  View Profile
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  if (onLogout) onLogout();
+                }}
+                className="w-full py-2 text-rose-600 hover:bg-rose-50 rounded-xl text-xs font-semibold text-center transition-colors cursor-pointer"
+              >
+                Log Out
+              </button>
+            </div>
+          ) : (
             <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-2">
               <button
                 onClick={() => {

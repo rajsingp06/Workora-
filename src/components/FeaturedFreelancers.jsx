@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Star, 
   MapPin, 
@@ -7,7 +7,9 @@ import {
   Clock, 
   ShieldCheck, 
   Sparkles,
-  Award
+  Award,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { featuredFreelancersData } from '../data/freelancers';
 
@@ -18,6 +20,8 @@ export default function FeaturedFreelancers({
   onSelectFreelancer,
   onOpenAuth 
 }) {
+  const [displayLimit, setDisplayLimit] = useState(6);
+
   const categoryFilters = [
     { id: 'all', label: 'All Services' },
     { id: 'ui-ux', label: 'UI/UX Design' },
@@ -29,6 +33,11 @@ export default function FeaturedFreelancers({
     { id: 'ai-automation', label: 'AI Services' },
     { id: 'content-writing', label: 'Content Writing' }
   ];
+
+  // Reset to 6 when category or search changes
+  useEffect(() => {
+    setDisplayLimit(6);
+  }, [selectedCategory, searchQuery]);
 
   // Filter freelancers based on category and search query
   const filteredFreelancers = useMemo(() => {
@@ -52,6 +61,11 @@ export default function FeaturedFreelancers({
     });
   }, [selectedCategory, searchQuery]);
 
+  // Constrain visible freelancers to 6-9 range for optimal page balance
+  const displayedFreelancers = useMemo(() => {
+    return filteredFreelancers.slice(0, displayLimit);
+  }, [filteredFreelancers, displayLimit]);
+
   return (
     <section id="featured-freelancers" className="py-16 md:py-24 bg-white border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,7 +85,7 @@ export default function FeaturedFreelancers({
           </div>
 
           <div className="flex items-center gap-2 self-start md:self-auto text-xs text-slate-500 font-semibold">
-            <span>Showing {filteredFreelancers.length} verified specialists</span>
+            <span>Showing {displayedFreelancers.length} of {filteredFreelancers.length} verified specialists</span>
           </div>
         </div>
 
@@ -83,7 +97,7 @@ export default function FeaturedFreelancers({
               <button
                 key={tab.id}
                 onClick={() => onSelectCategory(tab.id)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                   isSelected
                     ? 'bg-slate-900 text-white shadow-sm'
                     : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200/80'
@@ -101,16 +115,16 @@ export default function FeaturedFreelancers({
             <p className="text-sm font-bold text-slate-700 mb-2">No freelancers found matching your current filter.</p>
             <button
               onClick={() => onSelectCategory('all')}
-              className="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-lg hover:bg-emerald-700 transition-colors"
+              className="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-lg hover:bg-emerald-700 transition-colors cursor-pointer"
             >
               Show All Freelancers
             </button>
           </div>
         )}
 
-        {/* Freelancer Cards Grid (Fiverr-Inspired Clean Minimal UI) */}
+        {/* Freelancer Cards Grid (Fiverr-Inspired Clean Minimal UI - 6 to 9 cards displayed) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredFreelancers.map((freelancer) => {
+          {displayedFreelancers.map((freelancer) => {
             const isPro = freelancer.badges?.includes('Top Rated Plus') || freelancer.hourlyRate >= 2000;
 
             return (
@@ -214,7 +228,7 @@ export default function FeaturedFreelancers({
                       e.stopPropagation();
                       onSelectFreelancer(freelancer);
                     }}
-                    className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs flex items-center gap-1.5 transition-colors shadow-sm"
+                    className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer"
                   >
                     <span>View Profile</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -224,6 +238,39 @@ export default function FeaturedFreelancers({
             );
           })}
         </div>
+
+        {/* 6 to 9 Freelancers Controller: Prevents excessive vertical scrolling */}
+        {filteredFreelancers.length > 6 && (
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+            {displayLimit < filteredFreelancers.length ? (
+              <button
+                type="button"
+                onClick={() => setDisplayLimit((prev) => (prev === 6 ? 9 : filteredFreelancers.length))}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-300 hover:border-slate-900 bg-white hover:bg-slate-50 text-slate-900 text-xs sm:text-sm font-bold shadow-sm hover:shadow transition-all cursor-pointer"
+              >
+                <span>
+                  {displayLimit === 6 
+                    ? `Show More Specialists (${Math.min(filteredFreelancers.length, 9)} shown)` 
+                    : `View All ${filteredFreelancers.length} Specialists`}
+                </span>
+                <ChevronDown className="w-4 h-4 text-emerald-600" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setDisplayLimit(6);
+                  const el = document.getElementById('featured-freelancers');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs sm:text-sm font-bold transition-all cursor-pointer"
+              >
+                <span>Show Less (Show 6)</span>
+                <ChevronUp className="w-4 h-4 text-slate-500" />
+              </button>
+            )}
+          </div>
+        )}
 
       </div>
     </section>

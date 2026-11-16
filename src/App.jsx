@@ -165,6 +165,18 @@ export default function App() {
       navigateTo('local-services');
       return;
     }
+    if (sectionId === 'dashboard' || sectionId === 'profile') {
+      navigateTo('dashboard');
+      return;
+    }
+    if (sectionId === 'login' || sectionId === 'signup') {
+      navigateTo(sectionId);
+      return;
+    }
+    if (sectionId === 'edit-profile') {
+      handleEditProfile();
+      return;
+    }
     if (currentView !== 'landing') {
       navigateTo('landing');
       setTimeout(() => {
@@ -260,6 +272,8 @@ export default function App() {
         currentView={currentView}
         userLocation={userLocation}
         onOpenLocationModal={() => setIsLocationModalOpen(true)}
+        onLogout={handleLogout}
+        onEditProfile={handleEditProfile}
       />
 
       {/* Main Content Area */}
