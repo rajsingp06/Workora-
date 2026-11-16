@@ -90,6 +90,16 @@ export const localCategoriesData = [
     startingRate: '₹12,000',
     popularIn: ['Modular Kitchen Design', '1BHK/2BHK Full Makeover', 'False Ceiling & Lighting', 'Custom Wardrobes'],
     cover: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id: 'home-cleaning',
+    name: 'Home Cleaning',
+    tagline: 'Deep Cleaning, Sofa Shampooing & Kitchen Degreasing',
+    icon: 'Sparkles',
+    count: '430+ Pros',
+    startingRate: '₹799',
+    popularIn: ['Full Home Deep Cleaning', 'Sofa & Carpet Shampooing', 'Kitchen & Bathroom Sanitization', 'Pre-Occupancy Move-In Clean'],
+    cover: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80'
   }
 ];
 
@@ -1269,6 +1279,123 @@ export const localProvidersData = [
       { author: 'Chirag Patel', rating: 5, date: '2 months ago', comment: 'Nikhil optimized every square inch of our 3BHK flat in Bodakdev. Super transparent billing.' }
     ],
     coordinates: { lat: 23.0338, lng: 72.5085 }
+  },
+
+  // ==========================================
+  // HOME CLEANING (3-5 Profiles)
+  // ==========================================
+  {
+    id: 'loc-sunil-clean-pro',
+    name: 'Sunil Kamble',
+    profession: 'Deep Cleaning & Sanitization Specialist',
+    category: 'home-cleaning',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80',
+    rating: 4.94,
+    reviewsCount: 168,
+    startingPrice: 799,
+    priceUnit: 'per service',
+    priceDisplay: '₹799 onwards',
+    city: 'Mumbai',
+    area: 'Andheri, Bandra & Powai',
+    pinCode: '400053',
+    distanceKm: 2.3,
+    serviceRadiusKm: 22,
+    serviceArea: 'Mumbai & Suburbs',
+    availability: 'Available Today',
+    availabilityNote: 'Slots open for afternoon deep clean',
+    experienceYears: 8,
+    badges: ['Eco Chemicals', 'Verified Pro', 'Equipment Certified'],
+    phone: '+91 98205 77124',
+    whatsapp: '919820577124',
+    bio: 'Professional deep cleaning team using German Karcher steam machines and Diversey eco-friendly chemicals. 1BHK, 2BHK, 3BHK, kitchen degreasing and tile scrubbing.',
+    gallery: [
+      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80'
+    ],
+    servicesList: [
+      { name: '1BHK Full Apartment Deep Cleaning', price: '₹1,899', duration: '3.5 hrs' },
+      { name: '2BHK Comprehensive Deep Scrub', price: '₹2,699', duration: '4.5 hrs' },
+      { name: 'Kitchen Exhaust & Tile Degreasing', price: '₹999', duration: '2 hrs' },
+      { name: 'Sofa 5-Seater Shampoo & Vacuum', price: '₹799', duration: '1.5 hrs' }
+    ],
+    reviews: [
+      { author: 'Meera Rao', rating: 5, date: '3 days ago', comment: 'Sunil and his 2-member crew made our kitchen and bathrooms shine like new before Diwali.' }
+    ],
+    coordinates: { lat: 19.1136, lng: 72.8697 }
+  },
+  {
+    id: 'loc-deepak-cleaning-thane',
+    name: 'Deepak Thorat',
+    profession: 'Home & Sofa Sanitization Expert',
+    category: 'home-cleaning',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80',
+    rating: 4.91,
+    reviewsCount: 104,
+    startingPrice: 899,
+    priceUnit: 'per service',
+    priceDisplay: '₹899 onwards',
+    city: 'Thane',
+    area: 'Ghodbunder Rd & Majiwada',
+    pinCode: '400607',
+    distanceKm: 2.8,
+    serviceRadiusKm: 20,
+    serviceArea: 'Thane & Mulund',
+    availability: 'Available Tomorrow',
+    availabilityNote: 'Morning slot 9:00 AM open',
+    experienceYears: 6,
+    badges: ['Verified Pro', 'Top Rated Thane'],
+    phone: '+91 98193 44102',
+    whatsapp: '919819344102',
+    bio: 'Specialist in fabric sofa deep extraction, balcony bird net pressure washing, bathroom descaling, and full apartment move-in sanitation.',
+    gallery: [
+      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80'
+    ],
+    servicesList: [
+      { name: 'Full Bathroom Acid-Free Descaling', price: '₹899', duration: '1.5 hrs' },
+      { name: 'Balcony & Window Channel Pressure Wash', price: '₹950', duration: '2 hrs' }
+    ],
+    reviews: [
+      { author: 'Sanjay More', rating: 5, date: '1 week ago', comment: 'Punctual, thorough, and very courteous team.' }
+    ],
+    coordinates: { lat: 19.2183, lng: 72.9781 }
+  },
+  {
+    id: 'loc-sparkle-home-pune',
+    name: 'Prakash Shinde',
+    profession: 'Residential Steam & Deep Cleaning Lead',
+    category: 'home-cleaning',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80',
+    rating: 4.96,
+    reviewsCount: 88,
+    startingPrice: 999,
+    priceUnit: 'per service',
+    priceDisplay: '₹999 onwards',
+    city: 'Pune',
+    area: 'Kothrud, Baner & Wakad',
+    pinCode: '411038',
+    distanceKm: 3.2,
+    serviceRadiusKm: 25,
+    serviceArea: 'All Pune & PCMC',
+    availability: 'Available Today',
+    availabilityNote: 'Same day booking accepted',
+    experienceYears: 9,
+    badges: ['Steam Sanitization', 'Top Rated Pune'],
+    phone: '+91 98221 88920',
+    whatsapp: '919822188920',
+    bio: 'Hospital-grade steam sanitation for urban homes. Removes stubborn hard water scale, grease, dust mites, and carpet stains safely.',
+    gallery: [
+      'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80'
+    ],
+    servicesList: [
+      { name: 'Mattress & Sofa Steam Dustmite Sanitize', price: '₹1,200', duration: '2 hrs' },
+      { name: 'Kitchen & Chimney Degreasing', price: '₹999', duration: '1.5 hrs' }
+    ],
+    reviews: [
+      { author: 'Anita Joshi', rating: 5, date: '2 weeks ago', comment: 'Prakash did wonders on our sofa and kitchen. Absolutely worth it.' }
+    ],
+    coordinates: { lat: 18.5074, lng: 73.8077 }
   }
 ];
 

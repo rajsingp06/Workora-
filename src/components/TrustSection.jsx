@@ -5,105 +5,71 @@ export default function TrustSection() {
   const stats = [
     {
       id: 'stat-freelancers',
-      label: 'Talented Freelancers',
+      label: 'Verified Professionals',
       value: '48,000+',
-      description: 'Vetted domain specialists across 85+ countries',
+      description: 'Domain specialists & local pros across 10+ Indian cities',
       icon: Users,
     },
     {
       id: 'stat-projects',
       label: 'Projects Completed',
       value: '120,000+',
-      description: 'From seed-stage MVPs to enterprise deliverables',
+      description: 'From seed-stage software builds to local home services',
       icon: CheckCircle,
     },
     {
       id: 'stat-clients',
-      label: 'Happy Clients',
+      label: 'Client Satisfaction',
       value: '99.4%',
-      description: 'Average 5-star milestone approval rating',
+      description: 'Milestone escrow approvals with zero payment disputes',
       icon: Smile,
     },
     {
       id: 'stat-time',
-      label: 'Time to First Match',
-      value: '< 48 Hrs',
-      description: 'Fast, intelligent talent matchmaking',
+      label: 'Fast Turnaround',
+      value: '< 24 Hrs',
+      description: 'Direct communication & verified portfolio booking',
       icon: Clock,
     },
   ];
 
-  const clientLogos = [
-    { name: 'Linear', tag: 'Issue Tracking' },
-    { name: 'Vercel', tag: 'Cloud Platform' },
-    { name: 'Figma', tag: 'Design Tool' },
-    { name: 'Supabase', tag: 'Backend Suite' },
-    { name: 'Stripe', tag: 'Payments' },
-    { name: 'Raycast', tag: 'Productivity' },
-  ];
+  const brandNames = ['Razorpay Ecosystem', 'Meesho Sellers', 'FinNext Labs', 'Kaveri Organics', 'UrbanScale'];
 
   return (
-    <section className="py-16 bg-white border-y border-slate-200/80 relative">
+    <section id="trust" className="py-12 md:py-16 bg-[#FAFAFC] border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Top: Demo Notice Banner */}
-        <div className="flex items-center justify-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-500 text-xs">
-            <BadgeCheck className="w-3.5 h-3.5 text-brand-600" />
-            <span className="font-semibold text-slate-700">Platform Metrics</span>
-            <span className="text-slate-300">•</span>
-            <span>Realistic placeholder statistics for preview demonstration</span>
+        {/* Brand Logos Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-10 border-b border-slate-200/70 text-slate-400 text-xs">
+          <span className="font-bold uppercase tracking-wider text-slate-500">
+            Trusted by founders, agencies & households across:
+          </span>
+          <div className="flex flex-wrap items-center justify-center gap-6 font-bold text-slate-600">
+            {brandNames.map((name) => (
+              <span key={name} className="hover:text-slate-900 transition-colors">
+                {name}
+              </span>
+            ))}
           </div>
         </div>
 
-        {/* 4 Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-16">
-          {stats.map((item) => {
-            const Icon = item.icon;
+        {/* 4 Clean Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-10 text-left">
+          {stats.map((st) => {
+            const Icon = st.icon;
             return (
-              <div
-                key={item.id}
-                className="group p-6 rounded-2xl bg-slate-50/70 border border-slate-100 hover:border-brand-200 hover:bg-white hover:shadow-soft transition-all duration-200"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-white border border-slate-200/80 flex items-center justify-center text-brand-600 shadow-soft-sm group-hover:scale-105 transition-transform">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    Live Indicator
-                  </span>
+              <div key={st.id} className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
+                  <Icon className="w-4 h-4" />
                 </div>
-                <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-1">
-                  {item.value}
-                </h3>
-                <h4 className="text-sm font-bold text-slate-800 mb-1">
-                  {item.label}
-                </h4>
-                <p className="text-xs text-slate-500 leading-relaxed">
-                  {item.description}
+                <p className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-1">
+                  {st.value}
                 </p>
+                <h4 className="text-xs font-bold text-slate-800 mb-1">{st.label}</h4>
+                <p className="text-[11px] text-slate-500 leading-snug">{st.description}</p>
               </div>
             );
           })}
-        </div>
-
-        {/* Bottom: Trusted by Companies Strip */}
-        <div className="pt-8 border-t border-slate-100">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
-            Trusted by teams building the future of software and design
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 md:gap-16 opacity-75 grayscale hover:grayscale-0 transition-all">
-            {clientLogos.map((logo) => (
-              <div key={logo.name} className="flex items-center gap-2 group cursor-default">
-                <div className="w-6 h-6 rounded-md bg-slate-800 text-white flex items-center justify-center text-xs font-black">
-                  {logo.name.charAt(0)}
-                </div>
-                <span className="font-extrabold text-slate-700 tracking-tight text-base sm:text-lg group-hover:text-brand-600 transition-colors">
-                  {logo.name}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
 
       </div>

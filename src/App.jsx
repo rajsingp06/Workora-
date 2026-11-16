@@ -18,6 +18,11 @@ import ClientOnboarding from './components/onboarding/ClientOnboarding';
 import Dashboard from './components/dashboard/Dashboard';
 import { authStorage } from './utils/auth';
 
+// Redesign Feature Sections
+import WorkoraPro from './components/WorkoraPro';
+import LocalServicesHomepageSection from './components/LocalServicesHomepageSection';
+import SuccessStories from './components/SuccessStories';
+
 // Phase 03 Local Services Components
 import LocalServicesPage from './components/local/LocalServicesPage';
 import LocationModal from './components/local/LocationModal';
@@ -245,7 +250,7 @@ export default function App() {
 
   // Common Header & Footer Layout for Landing Page & Local Services Discovery Page
   return (
-    <div className="min-h-screen bg-[#FBFBFD] text-slate-900 selection:bg-brand-100 selection:text-brand-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-emerald-100 selection:text-emerald-900 flex flex-col font-sans">
       
       {/* Universal Sticky Navbar */}
       <Navbar
@@ -284,6 +289,20 @@ export default function App() {
               onSelectCategory={handleSelectCategory}
             />
 
+            <WorkoraPro
+              onSelectFreelancer={(f) => setSelectedFreelancer(f)}
+              onExplorePro={() => handleNavigateSection('featured-freelancers')}
+            />
+
+            <LocalServicesHomepageSection
+              userLocation={userLocation}
+              onOpenLocationModal={() => setIsLocationModalOpen(true)}
+              onSelectProvider={(p) => setSelectedLocalProvider(p)}
+              onOpenBooking={(p) => setBookingProvider(p)}
+              onNavigate={handleNavigateSection}
+              onShowToast={(msg) => setToastMessage(msg)}
+            />
+
             <FeaturedFreelancers
               selectedCategory={selectedCategory}
               onSelectCategory={setSelectedCategory}
@@ -291,6 +310,8 @@ export default function App() {
               onSelectFreelancer={setSelectedFreelancer}
               onOpenAuth={handleOpenAuth}
             />
+
+            <SuccessStories />
 
             <HowItWorks
               onOpenAuth={handleOpenAuth}

@@ -6,9 +6,9 @@ import {
   ShieldCheck, 
   Twitter, 
   Linkedin, 
-  Github, 
-  Dribbble,
-  Heart
+  Instagram,
+  Heart,
+  Sparkles
 } from 'lucide-react';
 
 export default function Footer({ onNavigate, onOpenAuth }) {
@@ -20,242 +20,294 @@ export default function Footer({ onNavigate, onOpenAuth }) {
     if (email && email.includes('@')) {
       setSubscribed(true);
       setEmail('');
-      setTimeout(() => setSubscribed(false), 5000);
+      setTimeout(() => setSubscribed(false), 4000);
     }
   };
 
-  const footerLinks = {
-    categories: [
-      { name: 'Web Development', id: 'popular-categories' },
-      { name: 'UI/UX Design', id: 'popular-categories' },
-      { name: 'Mobile App Development', id: 'popular-categories' },
-      { name: 'Graphic & Brand Design', id: 'popular-categories' },
-      { name: 'Digital Marketing & SEO', id: 'popular-categories' },
-      { name: 'AI & Automation', id: 'popular-categories' },
-    ],
-    forClients: [
-      { name: 'Find Top Talent', id: 'featured-freelancers' },
-      { name: 'How Hiring Works', id: 'how-it-works' },
-      { name: 'Enterprise Solutions', id: 'hero' },
-      { name: 'Milestone Escrow', id: 'how-it-works' },
-      { name: 'Client Success Stories', id: 'trust' },
-    ],
-    forFreelancers: [
-      { name: 'Browse Exciting Projects', id: 'hero' },
-      { name: 'Freelancer Community', id: 'hero' },
-      { name: 'Payout Methods & Escrow', id: 'how-it-works' },
-      { name: 'Pro Verification Badge', id: 'featured-freelancers' },
-      { name: 'Creator Academy', id: 'how-it-works' },
-    ],
-    company: [
-      { name: 'About Workora', action: () => alert('Workora is an independent premium freelance marketplace demo built with React & Tailwind.') },
-      { name: 'Help Center & FAQ', action: () => alert('Workora Concierge Demo: 24/7 dedicated support simulation.') },
-      { name: 'Contact Concierge', action: () => alert('Contact demo: concierge@workora.design') },
-      { name: 'Terms of Service', action: () => alert('Terms: Workora Demo platform. All rights reserved.') },
-      { name: 'Privacy Policy', action: () => alert('Privacy Policy: User privacy protected with strict escrow and zero third-party tracking.') },
-    ],
-  };
-
   return (
-    <footer className="bg-slate-950 text-slate-400 text-sm pt-16 pb-12 border-t border-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Main 4-Column Grid + Newsletter */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-slate-900">
+    <footer className="bg-white text-slate-600 text-xs sm:text-sm border-t border-slate-200">
+      
+      {/* Top Main Navigation Columns */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-10">
           
-          {/* Brand Column (4 cols) */}
-          <div className="lg:col-span-4 flex flex-col items-start">
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="flex items-center gap-2.5 mb-4 group"
-            >
-              <div className="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-extrabold text-xl shadow-brand-glow">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 6L8.5 18L12 9L15.5 18L20 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <span className="font-extrabold text-xl text-white tracking-tight">WORKORA</span>
-            </a>
+          {/* Col 1: Categories */}
+          <div>
+            <h4 className="font-black text-slate-900 text-sm mb-4 tracking-tight">
+              Explore Categories
+            </h4>
+            <ul className="space-y-2.5 text-xs text-slate-600">
+              <li>
+                <button onClick={() => onNavigate('categories')} className="hover:text-emerald-600 transition-colors">
+                  Website Development
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('categories')} className="hover:text-emerald-600 transition-colors">
+                  Graphic Design & Logos
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('categories')} className="hover:text-emerald-600 transition-colors">
+                  Video Editing & Reels
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('categories')} className="hover:text-emerald-600 transition-colors">
+                  Digital Marketing & SEO
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('categories')} className="hover:text-emerald-600 transition-colors">
+                  Content Writing
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('categories')} className="hover:text-emerald-600 transition-colors">
+                  App Development
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('categories')} className="hover:text-emerald-600 transition-colors">
+                  AI & Automation
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('categories')} className="hover:text-emerald-600 transition-colors">
+                  Photography
+                </button>
+              </li>
+            </ul>
+          </div>
 
-            <p className="text-slate-300 font-medium text-sm mb-2">
-              Where Skills Meet Opportunities.
-            </p>
-            <p className="text-slate-400 text-xs leading-relaxed max-w-sm mb-6">
-              The premier marketplace connecting verified independent designers, engineers, and strategists with ambitious companies worldwide.
-            </p>
+          {/* Col 2: Local Services */}
+          <div>
+            <h4 className="font-black text-slate-900 text-sm mb-4 tracking-tight">
+              Local Services
+            </h4>
+            <ul className="space-y-2.5 text-xs text-slate-600">
+              <li>
+                <button onClick={() => onNavigate('local-services')} className="hover:text-emerald-600 transition-colors">
+                  Plumbers & Pipe Fitters
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('local-services')} className="hover:text-emerald-600 transition-colors">
+                  Electricians & Wiring
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('local-services')} className="hover:text-emerald-600 transition-colors">
+                  Bridal & HD Makeup Artists
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('local-services')} className="hover:text-emerald-600 transition-colors">
+                  Rangoli Artists
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('local-services')} className="hover:text-emerald-600 transition-colors">
+                  Mehendi & Henna Artists
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('local-services')} className="hover:text-emerald-600 transition-colors">
+                  Event Photographers
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('local-services')} className="hover:text-emerald-600 transition-colors">
+                  Home Cleaning & Sanitization
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('local-services')} className="hover:text-emerald-600 transition-colors">
+                  Interior Designers
+                </button>
+              </li>
+            </ul>
+          </div>
 
-            {/* Newsletter input */}
-            <div className="w-full max-w-sm mb-6">
-              <span className="block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider">
-                Weekly Opportunity Dispatch
-              </span>
-              {subscribed ? (
-                <div className="flex items-center gap-2 text-xs text-brand-400 bg-brand-950/60 p-2.5 rounded-xl border border-brand-800">
-                  <CheckCircle className="w-4 h-4" />
-                  <span>You're subscribed to the Workora dispatch!</span>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="flex gap-2">
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500"
-                  />
-                  <button
-                    type="submit"
-                    className="px-3.5 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition-colors"
-                  >
-                    Join
-                  </button>
-                </form>
+          {/* Col 3: For Freelancers / Become a Seller */}
+          <div>
+            <h4 className="font-black text-slate-900 text-sm mb-4 tracking-tight">
+              Become a Freelancer
+            </h4>
+            <ul className="space-y-2.5 text-xs text-slate-600">
+              <li>
+                <button onClick={() => onOpenAuth('signup', 'freelancer')} className="hover:text-emerald-600 transition-colors font-bold text-emerald-700">
+                  Join as a Specialist
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onOpenAuth('signup', 'freelancer')} className="hover:text-emerald-600 transition-colors">
+                  Become a Seller
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('workora-pro')} className="hover:text-emerald-600 transition-colors">
+                  Apply for Workora Pro
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('how-it-works')} className="hover:text-emerald-600 transition-colors">
+                  Guaranteed Escrow Payouts
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('success-stories')} className="hover:text-emerald-600 transition-colors">
+                  Freelancer Success Stories
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onOpenAuth('signup', 'freelancer')} className="hover:text-emerald-600 transition-colors">
+                  Resume Verification Standards
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: About Workora */}
+          <div>
+            <h4 className="font-black text-slate-900 text-sm mb-4 tracking-tight">
+              About Workora
+            </h4>
+            <ul className="space-y-2.5 text-xs text-slate-600">
+              <li>
+                <button onClick={() => onNavigate('trust')} className="hover:text-emerald-600 transition-colors">
+                  About Our Platform
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('workora-pro')} className="hover:text-emerald-600 transition-colors">
+                  Workora Pro Enterprise
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('success-stories')} className="hover:text-emerald-600 transition-colors">
+                  Customer Case Studies
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('trust')} className="hover:text-emerald-600 transition-colors">
+                  Trust & Safety Standards
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('hero')} className="hover:text-emerald-600 transition-colors">
+                  Careers & Culture
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('hero')} className="hover:text-emerald-600 transition-colors">
+                  Press & Partnerships
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 5: Help & Support & Legal */}
+          <div className="col-span-2 md:col-span-4 lg:col-span-1">
+            <h4 className="font-black text-slate-900 text-sm mb-4 tracking-tight">
+              Help & Support
+            </h4>
+            <ul className="space-y-2.5 text-xs text-slate-600 mb-6">
+              <li>
+                <button onClick={() => alert('Workora Help Center: Dedicated 24/7 client and seller assistance.')} className="hover:text-emerald-600 transition-colors">
+                  Help Center & FAQs
+                </button>
+              </li>
+              <li>
+                <button onClick={() => alert('Contact: support@workora.in')} className="hover:text-emerald-600 transition-colors">
+                  Contact Support
+                </button>
+              </li>
+              <li>
+                <button onClick={() => alert('Workora Escrow Guarantee: 100% money-back on unfulfilled milestones.')} className="hover:text-emerald-600 transition-colors">
+                  Payment Protection Policy
+                </button>
+              </li>
+              <li>
+                <button onClick={() => alert('Terms & Conditions: Workora Freelance Marketplace India.')} className="hover:text-emerald-600 transition-colors font-medium">
+                  Terms & Conditions
+                </button>
+              </li>
+              <li>
+                <button onClick={() => alert('Privacy Policy: User data secured with bank-grade encryption.')} className="hover:text-emerald-600 transition-colors font-medium">
+                  Privacy Policy
+                </button>
+              </li>
+            </ul>
+
+            {/* Newsletter Subscription */}
+            <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+              <p className="text-[11px] font-bold text-slate-900 mb-1">Stay updated with Workora</p>
+              <form onSubmit={handleSubscribe} className="flex gap-1.5 mt-2">
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-slate-200 bg-white text-slate-900 focus:outline-none focus:border-emerald-500"
+                />
+                <button
+                  type="submit"
+                  className="px-3 py-1.5 bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs rounded-lg transition-colors shrink-0"
+                >
+                  Join
+                </button>
+              </form>
+              {subscribed && (
+                <p className="text-[10px] text-emerald-700 font-bold mt-1.5 flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3" /> Subscribed successfully!
+                </p>
               )}
             </div>
+          </div>
 
-            {/* Social links */}
-            <div className="flex items-center gap-3 text-slate-400">
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-slate-800 hover:text-white flex items-center justify-center transition-colors border border-slate-800"
-                aria-label="Twitter / X"
-              >
+        </div>
+      </div>
+
+      {/* Bottom Bar: Copyright, Currency and Social Links */}
+      <div className="border-t border-slate-100 py-6 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          
+          {/* Logo & Copyright */}
+          <div className="flex items-center gap-3">
+            <span className="font-black text-lg tracking-tight text-slate-900 flex items-center">
+              WORKORA<span className="text-emerald-500 font-black text-xl leading-none">.</span>
+            </span>
+            <span className="text-slate-300">|</span>
+            <span className="text-xs text-slate-500">
+              © {new Date().getFullYear()} Workora Technologies Pvt. Ltd. Where Skills Meet Opportunities.
+            </span>
+          </div>
+
+          {/* Currency Pill & Social Links */}
+          <div className="flex items-center gap-4 text-xs">
+            <div className="flex items-center gap-1.5 font-bold text-slate-800 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-sm">
+              <span className="text-emerald-600 font-black">₹</span>
+              <span>INR (Indian Rupee)</span>
+            </div>
+
+            <div className="flex items-center gap-3 text-slate-500">
+              <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-slate-800 hover:text-white flex items-center justify-center transition-colors border border-slate-800"
-                aria-label="LinkedIn"
-              >
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-slate-800 hover:text-white flex items-center justify-center transition-colors border border-slate-800"
-                aria-label="GitHub"
-              >
-                <Github className="w-4 h-4" />
-              </a>
-              <a
-                href="https://dribbble.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-lg bg-slate-900 hover:bg-slate-800 hover:text-white flex items-center justify-center transition-colors border border-slate-800"
-                aria-label="Dribbble"
-              >
-                <Dribbble className="w-4 h-4" />
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors">
+                <Instagram className="w-4 h-4" />
               </a>
             </div>
           </div>
 
-          {/* Links Columns (8 cols) */}
-          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
-            
-            {/* Categories */}
-            <div>
-              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider mb-4">
-                Categories
-              </h4>
-              <ul className="space-y-2.5">
-                {footerLinks.categories.map((item) => (
-                  <li key={item.name}>
-                    <button
-                      onClick={() => onNavigate(item.id)}
-                      className="text-xs text-slate-400 hover:text-brand-400 transition-colors text-left"
-                    >
-                      {item.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* For Clients */}
-            <div>
-              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider mb-4">
-                For Clients
-              </h4>
-              <ul className="space-y-2.5">
-                {footerLinks.forClients.map((item) => (
-                  <li key={item.name}>
-                    <button
-                      onClick={() => onNavigate(item.id)}
-                      className="text-xs text-slate-400 hover:text-brand-400 transition-colors text-left"
-                    >
-                      {item.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* For Freelancers */}
-            <div>
-              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider mb-4">
-                For Talent
-              </h4>
-              <ul className="space-y-2.5">
-                {footerLinks.forFreelancers.map((item) => (
-                  <li key={item.name}>
-                    <button
-                      onClick={() => onNavigate(item.id)}
-                      className="text-xs text-slate-400 hover:text-brand-400 transition-colors text-left"
-                    >
-                      {item.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Company & Legal */}
-            <div>
-              <h4 className="text-xs font-extrabold text-white uppercase tracking-wider mb-4">
-                Company & Legal
-              </h4>
-              <ul className="space-y-2.5">
-                {footerLinks.company.map((item) => (
-                  <li key={item.name}>
-                    <button
-                      onClick={item.action}
-                      className="text-xs text-slate-400 hover:text-white transition-colors text-left"
-                    >
-                      {item.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-          </div>
-
         </div>
-
-        {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© 2026 WORKORA Inc. All rights reserved. Built with React & Vite.</p>
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              All Systems Operational
-            </span>
-            <span className="text-slate-700">•</span>
-            <span>Escrow Protected (Demo)</span>
-          </div>
-        </div>
-
       </div>
+
     </footer>
   );
 }
