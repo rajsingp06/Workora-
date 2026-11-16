@@ -4,7 +4,6 @@ import {
   X, 
   ArrowRight, 
   ChevronDown, 
-  MapPin, 
   Compass, 
   Sparkles, 
   Code2, 
@@ -18,8 +17,7 @@ import {
   Wrench, 
   Zap, 
   User, 
-  LayoutDashboard,
-  Search
+  LayoutDashboard
 } from 'lucide-react';
 import { categoriesData } from '../data/categories';
 import { localCategoriesData } from '../data/localServices';
@@ -82,11 +80,11 @@ export default function Navbar({
 
   return (
     <header className="sticky top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 transition-all duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 xl:h-18 gap-3">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
+        <div className="flex items-center justify-between h-16 xl:h-18 gap-4 w-full">
           
-          {/* Left: Workora Logo & Location Selector */}
-          <div className="flex items-center gap-3 md:gap-4 shrink-0">
+          {/* Far Left: Workora Logo */}
+          <div className="flex items-center gap-3 shrink-0">
             <a
               href="#"
               onClick={(e) => {
@@ -106,23 +104,9 @@ export default function Navbar({
                 <span className="text-emerald-500 font-extrabold text-2xl leading-none">.</span>
               </span>
             </a>
-
-            {/* Location selector pill */}
-            <button
-              type="button"
-              onClick={onOpenLocationModal}
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-xs text-slate-700 hover:text-emerald-800 transition-all shadow-soft-sm max-w-[190px] truncate shrink-0"
-              title="Click to change your location"
-            >
-              <MapPin className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              <span className="font-bold truncate text-[11px] xl:text-xs">
-                {userLocation?.city || 'Mumbai'}, {userLocation?.area?.split(' ')[0] || 'Bandra'}
-              </span>
-              <ChevronDown className="w-3 h-3 text-slate-400 shrink-0" />
-            </button>
           </div>
 
-          {/* Desktop Navigation Links (Fiverr Inspired) */}
+          {/* Center Navigation Links (Fiverr Inspired) */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
             
             {/* Explore Categories Dropdown */}
@@ -243,20 +227,21 @@ export default function Navbar({
             </button>
           </nav>
 
-          {/* Right: Auth / Join Actions */}
-          <div className="flex items-center gap-2 xl:gap-3">
+          {/* Far Right Corner: Auth / Profile Button */}
+          <div className="flex items-center gap-2 xl:gap-3 shrink-0">
             {currentUser ? (
               <button
                 onClick={() => onNavigate('dashboard')}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-emerald-500 transition-all text-xs font-bold text-slate-800 shadow-soft-sm"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 transition-all text-xs font-bold text-slate-800 shadow-soft-sm group"
+                title="Go to your dashboard"
               >
                 <img
                   src={currentUser.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80'}
                   alt={currentUser.fullName}
-                  className="w-6 h-6 rounded-lg object-cover ring-1 ring-slate-200"
+                  className="w-7 h-7 rounded-full object-cover ring-1 ring-slate-200 group-hover:ring-emerald-400"
                 />
-                <span className="truncate max-w-[90px]">{currentUser.fullName?.split(' ')[0] || 'User'}</span>
-                <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                <span className="font-bold text-slate-900">{currentUser.fullName?.split(' ')[0] || 'User'}</span>
+                <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
                   {currentUser.role === 'freelancer' ? 'Seller' : 'Buyer'}
                 </span>
               </button>
@@ -293,23 +278,6 @@ export default function Navbar({
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3 animate-fadeIn">
-          
-          {/* Location mobile button */}
-          <button
-            type="button"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onOpenLocationModal();
-            }}
-            className="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-800"
-          >
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-emerald-600" />
-              <span>Location: {userLocation?.city || 'Mumbai'}, {userLocation?.area || 'Bandra'}</span>
-            </div>
-            <span className="text-emerald-700 text-[11px] underline">Change</span>
-          </button>
-
           <div className="space-y-1">
             <button
               onClick={() => handleNavClick('categories')}
