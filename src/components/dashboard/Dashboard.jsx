@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   ArrowLeft, 
   CheckCircle2, 
-  DollarSign, 
+  IndianRupee, 
   Star, 
   TrendingUp, 
   Users, 
@@ -188,7 +188,7 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
             <>
               <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-soft">
                 <span className="text-[11px] font-bold uppercase text-slate-400 block mb-1">Hourly Rate</span>
-                <div className="text-2xl font-black text-slate-900">${user?.hourlyRate || 85}<span className="text-xs font-normal text-slate-400">/hr</span></div>
+                <div className="text-2xl font-black text-slate-900">₹{(user?.hourlyRate || 1850).toLocaleString('en-IN')}<span className="text-xs font-normal text-slate-400">/hr</span></div>
                 <span className="text-[11px] font-semibold text-brand-600 mt-1 block">Standard Billing</span>
               </div>
               <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-soft">
@@ -213,7 +213,7 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
             <>
               <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-soft">
                 <span className="text-[11px] font-bold uppercase text-slate-400 block mb-1">Target Budget</span>
-                <div className="text-2xl font-black text-slate-900">{user?.hiringRequirements?.budgetRange || '$10k - $25k'}</div>
+                <div className="text-2xl font-black text-slate-900">{user?.hiringRequirements?.budgetRange || '₹2,50,000 - ₹10,00,000'}</div>
                 <span className="text-[11px] font-semibold text-brand-600 mt-1 block">Milestone Escrow Ready</span>
               </div>
               <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-soft">
@@ -261,14 +261,14 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
                     {
                       company: 'Veloce AI',
                       title: 'Frontend Lead for Autonomous Drone Telemetry Dashboard',
-                      budget: '$12,000 Milestone',
+                      budget: '₹95,000 Milestone',
                       time: '2 hours ago',
                       snippet: 'Looking for a specialist with Next.js and high-performance WebGL canvas experience to build our real-time telemetry suite.'
                     },
                     {
                       company: 'Northstar Health',
                       title: 'HIPAA-compliant Design System & Patient Flow',
-                      budget: '$90/hr (approx 80 hrs)',
+                      budget: '₹1,800/hr (approx 80 hrs)',
                       time: 'Yesterday',
                       snippet: 'We loved your work on healthcare UI. Need to revamp our multi-tenant clinician workflows before Series-A.'
                     }
@@ -402,7 +402,7 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 mt-2 leading-relaxed">
-                    Lead engineer submitted staging build for review. Once verified, one-click release milestone escrow of $4,500.
+                    Lead engineer submitted staging build for review. Once verified, one-click release milestone escrow of ₹85,000.
                   </p>
                   <div className="mt-4 flex items-center gap-2">
                     <button
@@ -410,7 +410,7 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
                       onClick={() => alert('Escrow release simulation approved!')}
                       className="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-brand-600 transition-colors"
                     >
-                      Release Milestone ($4,500)
+                      Release Milestone (₹85,000)
                     </button>
                     <button
                       type="button"
@@ -440,20 +440,20 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     {
-                      name: 'Elena Rostova',
-                      role: 'Senior Product Designer',
-                      rate: '$95/hr',
+                      name: 'Priya Nair',
+                      role: 'Lead Product & UX Designer',
+                      rate: '₹1,850/hr',
                       rating: 4.98,
-                      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+                      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80',
                       skills: ['Figma', 'Design Systems', 'SaaS UX']
                     },
                     {
-                      name: 'Marcus Vance',
-                      role: 'Full-Stack AI & Cloud Architect',
-                      rate: '$120/hr',
+                      name: 'Aarav Patel',
+                      role: 'Full-Stack Next.js & Cloud Architect',
+                      rate: '₹2,500/hr',
                       rating: 5.0,
                       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
-                      skills: ['React', 'Python', 'AWS', 'Next.js']
+                      skills: ['React', 'Next.js', 'AWS', 'Node.js']
                     }
                   ].map((talent, idx) => (
                     <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col justify-between">
@@ -559,10 +559,10 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
                   onChange={(e) => setJobBudget(e.target.value)}
                   className="w-full px-3.5 py-2.5 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-brand-500 focus:bg-white"
                 >
-                  <option value="1k-3k">$1,000 - $3,000</option>
-                  <option value="3k-5k">$3,000 - $5,000</option>
-                  <option value="5k-10k">$5,000 - $10,000</option>
-                  <option value="10k+">$10,000+</option>
+                  <option value="10k-25k">₹10,000 - ₹25,000</option>
+                  <option value="25k-50k">₹25,000 - ₹50,000</option>
+                  <option value="50k-100k">₹50,000 - ₹1,00,000</option>
+                  <option value="100k+">₹1,00,000+</option>
                 </select>
               </div>
 

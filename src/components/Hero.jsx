@@ -185,20 +185,20 @@ export default function Hero({ onSearch, onSelectCategory, onOpenAuth }) {
                   <div className="flex items-center gap-3.5">
                     <div className="relative">
                       <img
-                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
-                        alt="Elena Rostova"
+                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80"
+                        alt="Priya Nair"
                         className="w-14 h-14 rounded-2xl object-cover ring-2 ring-brand-500/30"
                       />
                       <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full" title="Online" />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <h4 className="font-extrabold text-slate-900 text-base">Elena Rostova</h4>
+                        <h4 className="font-extrabold text-slate-900 text-base">Priya Nair</h4>
                         <span className="text-brand-600" title="Workora Verified">
                           <CheckCircle2 className="w-4 h-4 fill-brand-100" />
                         </span>
                       </div>
-                      <p className="text-xs text-slate-500 font-medium">Design Systems & SaaS Lead</p>
+                      <p className="text-xs text-slate-500 font-medium">Lead Product & UX Designer • Bengaluru</p>
                       <div className="flex items-center gap-1 mt-0.5">
                         <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
                         <span className="text-xs font-bold text-slate-800">4.98</span>
@@ -209,7 +209,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenAuth }) {
 
                   <div className="text-right">
                     <span className="text-xs text-slate-400 uppercase font-semibold">Rate</span>
-                    <p className="text-lg font-black text-slate-900">$95<span className="text-xs font-normal text-slate-500">/hr</span></p>
+                    <p className="text-lg font-black text-slate-900">₹1,850<span className="text-xs font-normal text-slate-500">/hr</span></p>
                   </div>
                 </div>
 

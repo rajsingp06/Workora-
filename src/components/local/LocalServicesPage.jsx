@@ -27,7 +27,7 @@ import {
   Home,
   Check
 } from 'lucide-react';
-import { localCategoriesData, localProvidersData } from '../../data/localServices';
+import { localCategoriesData, localProvidersData, POPULAR_CITIES } from '../../data/localServices';
 
 // Icon map for the 9 categories
 const categoryIconMap = {
@@ -51,6 +51,7 @@ export default function LocalServicesPage({
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCityFilter, setSelectedCityFilter] = useState('all'); // 'all' | City Name
   const [maxDistance, setMaxDistance] = useState(25); // km
   const [availabilityFilter, setAvailabilityFilter] = useState('all'); // 'all' | 'today' | 'weekend'
   const [sortBy, setSortBy] = useState('distance'); // 'distance' | 'rating' | 'price'
@@ -65,7 +66,12 @@ export default function LocalServicesPage({
         const matchesCategory =
           selectedCategory === 'all' || provider.category === selectedCategory;
 
-        // Search query filter
+        // City filter
+        const matchesCity =
+          selectedCityFilter === 'all' || 
+          provider.city.toLowerCase() === selectedCityFilter.toLowerCase();
+
+        // Search query filter (matches name, profession, city, area, PIN code, or services)
         const q = searchQuery.toLowerCase().trim();
         const matchesSearch =
           !q ||
@@ -73,6 +79,7 @@ export default function LocalServicesPage({
           provider.profession.toLowerCase().includes(q) ||
           provider.city.toLowerCase().includes(q) ||
           provider.area.toLowerCase().includes(q) ||
+          (provider.pinCode && provider.pinCode.includes(q)) ||
           provider.servicesList?.some((s) => s.name.toLowerCase().includes(q));
 
         // Distance filter
@@ -84,7 +91,7 @@ export default function LocalServicesPage({
           (availabilityFilter === 'today' && provider.availability.toLowerCase().includes('today')) ||
           (availabilityFilter === 'weekend' && (provider.availability.toLowerCase().includes('weekend') || provider.availability.toLowerCase().includes('today')));
 
-        return matchesCategory && matchesSearch && matchesDistance && matchesAvailability;
+        return matchesCategory && matchesCity && matchesSearch && matchesDistance && matchesAvailability;
       })
       .sort((a, b) => {
         if (sortBy === 'distance') return a.distanceKm - b.distanceKm;
@@ -92,7 +99,7 @@ export default function LocalServicesPage({
         if (sortBy === 'price') return a.startingPrice - b.startingPrice;
         return 0;
       });
-  }, [searchQuery, selectedCategory, maxDistance, availabilityFilter, sortBy]);
+  }, [searchQuery, selectedCategory, selectedCityFilter, maxDistance, availabilityFilter, sortBy]);
 
   const handleQuickCall = (e, provider) => {
     e.stopPropagation();
@@ -290,8 +297,23 @@ export default function LocalServicesPage({
           {/* Controls Bar: Results count, Filters, and View Toggle (List vs Map) */}
           <div className="bg-white rounded-2xl border border-slate-200/80 p-4 mb-8 shadow-soft-sm flex flex-col md:flex-row items-center justify-between gap-4">
             
-            {/* Left: Distance & Filters */}
+            {/* Left: City, Distance & Filters */}
             <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+              {/* City Filter */}
+              <div className="flex items-center gap-1.5 text-xs text-slate-700 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+                <span className="font-bold text-slate-500">City:</span>
+                <select
+                  value={selectedCityFilter}
+                  onChange={(e) => setSelectedCityFilter(e.target.value)}
+                  className="bg-transparent font-bold text-slate-900 focus:outline-none"
+                >
+                  <option value="all">All Cities</option>
+                  {POPULAR_CITIES.map((c) => (
+                    <option key={c.name} value={c.name}>{c.name}</option>
+                  ))}
+                </select>
+              </div>
+
               {/* Distance filter */}
               <div className="flex items-center gap-1.5 text-xs text-slate-700 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
                 <span className="font-bold text-slate-500">Radius:</span>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   ArrowRight, 
   ArrowLeft, 
@@ -8,14 +8,17 @@ import {
   User, 
   MapPin, 
   Briefcase, 
-  DollarSign, 
   Globe, 
   Sparkles, 
   Star, 
   CheckCircle2, 
   AlertCircle,
   HelpCircle,
-  Edit3
+  Edit3,
+  FileText,
+  UploadCloud,
+  Trash2,
+  RefreshCw
 } from 'lucide-react';
 import { authStorage } from '../../utils/auth';
 
@@ -39,11 +42,11 @@ const SKILL_CATEGORIES = {
 };
 
 const AVATAR_PRESETS = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80',
   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
-  'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80',
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
-  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80'
+  'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80',
+  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80',
+  'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=300&q=80'
 ];
 
 export default function FreelancerOnboarding({ user, onComplete, onShowToast }) {
@@ -54,7 +57,7 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
   const [avatar, setAvatar] = useState(user?.avatar || AVATAR_PRESETS[0]);
   const [fullName, setFullName] = useState(user?.fullName || '');
   const [title, setTitle] = useState(user?.title || 'Senior Full-Stack Engineer');
-  const [location, setLocation] = useState(user?.location || 'San Francisco, CA');
+  const [location, setLocation] = useState(user?.location || 'Bengaluru, Karnataka');
 
   // Step 2: Skills & Experience
   const [selectedSkills, setSelectedSkills] = useState(
@@ -67,13 +70,20 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
     user?.bio ||
     'Experienced specialist crafting production-grade software and interfaces with a focus on speed, design precision, and business metrics.'
   );
-  const [hourlyRate, setHourlyRate] = useState(user?.hourlyRate || 85);
+  const [hourlyRate, setHourlyRate] = useState(user?.hourlyRate || 1800);
   const [portfolioUrl, setPortfolioUrl] = useState(user?.portfolioUrl || 'https://github.com');
+
+  // Resume Upload State in Onboarding
+  const [resumeFile, setResumeFile] = useState(user?.resume || null);
+  const [isUploadingResume, setIsUploadingResume] = useState(false);
+  const [resumeProgress, setResumeProgress] = useState(0);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const fileInputRef = useRef(null);
 
   const stepsList = [
     { number: 1, title: 'Personal Info' },
     { number: 2, title: 'Skills' },
-    { number: 3, title: 'Professional Details' },
+    { number: 3, title: 'Professional Details & Resume' },
     { number: 4, title: 'Review Profile' }
   ];
 
@@ -87,6 +97,51 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const processResumeFile = (file) => {
+    setError('');
+    if (!file) return;
+
+    const validExtensions = ['.pdf', '.doc', '.docx'];
+    const lowerName = file.name.toLowerCase();
+    const isValidExt = validExtensions.some(ext => lowerName.endsWith(ext));
+
+    if (!isValidExt) {
+      setError('Please upload a valid PDF or DOC/DOCX document.');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setError('File size exceeds the 5 MB limit.');
+      return;
+    }
+
+    const formattedSize = file.size >= 1024 * 1024 
+      ? `${(file.size / (1024 * 1024)).toFixed(2)} MB` 
+      : `${Math.round(file.size / 1024)} KB`;
+
+    setIsUploadingResume(true);
+    setResumeProgress(30);
+
+    setTimeout(() => {
+      setResumeProgress(75);
+    }, 150);
+
+    setTimeout(() => {
+      setResumeProgress(100);
+      setIsUploadingResume(false);
+      setResumeFile({
+        name: file.name,
+        size: file.size,
+        formattedSize,
+        type: file.type || 'application/pdf',
+        lastModified: file.lastModified || Date.now()
+      });
+      if (onShowToast) {
+        onShowToast(`Resume "${file.name}" updated successfully!`);
+      }
+    }, 350);
   };
 
   const handleToggleSkill = (skill) => {
@@ -123,7 +178,11 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
         return false;
       }
       if (!hourlyRate || hourlyRate <= 0) {
-        setError('Please enter a valid hourly rate.');
+        setError('Please enter a valid hourly rate in ₹.');
+        return false;
+      }
+      if (!resumeFile) {
+        setError('Please ensure your resume is uploaded (mandatory for verified freelancers).');
         return false;
       }
     }
@@ -153,6 +212,7 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
         bio: bio.trim(),
         hourlyRate: Number(hourlyRate),
         portfolioUrl: portfolioUrl.trim(),
+        resume: resumeFile,
         profileCompleted: true
       };
 
@@ -198,36 +258,48 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
           </div>
 
           {/* Step Pill indicators */}
-          <div className="grid grid-cols-4 gap-2 text-center">
-            {stepsList.map((step) => (
-              <div
-                key={step.number}
-                className={`py-2 px-1 rounded-xl text-[11px] font-bold border transition-colors ${
-                  step.number === currentStep
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-soft-sm'
-                    : step.number < currentStep
-                    ? 'bg-brand-50 text-brand-700 border-brand-200'
-                    : 'bg-white text-slate-400 border-slate-200'
-                }`}
-              >
-                <span className="hidden sm:inline">Step {step.number}: </span>
-                <span>{step.title}</span>
-              </div>
-            ))}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {stepsList.map((step) => {
+              const isPassed = step.number < currentStep;
+              const isCurrent = step.number === currentStep;
+              return (
+                <div
+                  key={step.number}
+                  className={`flex items-center gap-2 p-2 rounded-xl border text-xs font-bold transition-all ${
+                    isCurrent
+                      ? 'border-brand-600 bg-white text-slate-900 shadow-soft-sm ring-1 ring-brand-500/10'
+                      : isPassed
+                      ? 'border-emerald-200 bg-emerald-50/40 text-emerald-800'
+                      : 'border-slate-200/60 bg-white/50 text-slate-400'
+                  }`}
+                >
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black ${
+                    isCurrent
+                      ? 'bg-brand-600 text-white'
+                      : isPassed
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-slate-200 text-slate-600'
+                  }`}>
+                    {isPassed ? <Check className="w-3 h-3 stroke-[3]" /> : step.number}
+                  </div>
+                  <span className="truncate">{step.title}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Error Notification */}
-        {error && (
-          <div className="mb-6 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5 animate-fadeIn">
-            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-600" />
-            <div className="flex-1 font-medium">{error}</div>
-          </div>
-        )}
-
-        {/* Form Container */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft-xl p-6 sm:p-10 mb-8">
+        {/* Card Body */}
+        <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft-xl p-6 sm:p-10 relative">
           
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs sm:text-sm flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
+              <div className="font-medium">{error}</div>
+            </div>
+          )}
+
           {/* STEP 1: Personal Information */}
           {currentStep === 1 && (
             <div className="space-y-6 animate-fadeIn">
@@ -236,54 +308,63 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
                   Personal Information
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Clients connect with people first. Add a professional photo and your primary title.
+                  How should clients address and see you across the platform?
                 </p>
               </div>
 
-              {/* Photo Upload UI */}
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center gap-6">
-                <div className="relative group">
-                  <img
-                    src={avatar}
-                    alt="Preview"
-                    className="w-24 h-24 rounded-3xl object-cover ring-4 ring-white shadow-soft-lg"
-                  />
-                  <label
-                    htmlFor="avatar-upload"
-                    className="absolute inset-0 bg-slate-950/40 rounded-3xl opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer text-white transition-opacity"
-                  >
-                    <Camera className="w-6 h-6" />
-                  </label>
-                  <input
-                    id="avatar-upload"
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePhotoUpload}
-                    className="hidden"
-                  />
-                </div>
+              {/* Profile Photo Upload */}
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-3">
+                  Profile Photo <span className="text-rose-500">*</span>
+                </label>
+                <div className="flex flex-col sm:flex-row items-center gap-6">
+                  <div className="relative group">
+                    <img
+                      src={avatar}
+                      alt="Avatar Preview"
+                      className="w-24 h-24 rounded-2xl object-cover border-2 border-slate-200 group-hover:border-brand-500 transition-colors shadow-soft"
+                    />
+                    <label className="absolute inset-0 bg-slate-900/40 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity text-white text-xs font-bold">
+                      <Camera className="w-5 h-5 mb-1" />
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
 
-                <div className="flex-1 text-center sm:text-left">
-                  <h4 className="text-sm font-bold text-slate-800 mb-1">Profile Photo</h4>
-                  <p className="text-xs text-slate-500 mb-3">
-                    Upload your high-resolution headshot or select one of the verified sample presets.
-                  </p>
-                  
-                  {/* Preset photo selector */}
-                  <div className="flex items-center justify-center sm:justify-start gap-2">
-                    <span className="text-[10px] font-bold uppercase text-slate-400">Presets:</span>
-                    {AVATAR_PRESETS.map((p, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => setAvatar(p)}
-                        className={`w-7 h-7 rounded-xl overflow-hidden ring-2 transition-all ${
-                          avatar === p ? 'ring-brand-600 scale-110' : 'ring-transparent opacity-70 hover:opacity-100'
-                        }`}
-                      >
-                        <img src={p} alt="Preset" className="w-full h-full object-cover" />
-                      </button>
-                    ))}
+                  <div className="flex-1 text-center sm:text-left">
+                    <label className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold cursor-pointer transition-colors mb-2">
+                      <Upload className="w-4 h-4 text-slate-600" />
+                      <span>Upload Custom Headshot</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                      />
+                    </label>
+                    <p className="text-[11px] text-slate-400">
+                      Or pick from authentic verified presets below:
+                    </p>
+
+                    {/* Presets */}
+                    <div className="flex items-center gap-2 mt-2 justify-center sm:justify-start">
+                      {AVATAR_PRESETS.map((p, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setAvatar(p)}
+                          className={`w-9 h-9 rounded-xl overflow-hidden border-2 transition-all ${
+                            avatar === p ? 'border-brand-600 ring-2 ring-brand-500/20 scale-105' : 'border-transparent opacity-70 hover:opacity-100'
+                          }`}
+                        >
+                          <img src={p} alt={`Preset ${idx + 1}`} className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -300,7 +381,7 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
                     required
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="e.g. Elena Rostova"
+                    placeholder="e.g. Priya Nair"
                     className="w-full pl-10 pr-4 py-3 text-sm text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white"
                   />
                 </div>
@@ -322,15 +403,12 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
                     className="w-full pl-10 pr-4 py-3 text-sm text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white"
                   />
                 </div>
-                <p className="text-[11px] text-slate-400 mt-1">
-                  Keep it concise and clear. This appears right under your name on talent listings.
-                </p>
               </div>
 
               {/* Location */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  Location <span className="text-rose-500">*</span>
+                  Location (City, State) <span className="text-rose-500">*</span>
                 </label>
                 <div className="relative">
                   <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -339,7 +417,7 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
                     required
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    placeholder="e.g. Berlin, Germany or San Francisco, CA"
+                    placeholder="e.g. Bengaluru, Karnataka or Mumbai, Maharashtra"
                     className="w-full pl-10 pr-4 py-3 text-sm text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white"
                   />
                 </div>
@@ -352,30 +430,30 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
             <div className="space-y-6 animate-fadeIn">
               <div>
                 <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-                  Skills & Experience Level
+                  Skills & Seniority
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Select your strongest skills. Clients search and filter talent using these tags.
+                  Tag the frameworks, tools, and expertise you bring to clients.
                 </p>
               </div>
 
-              {/* Experience Level Selector */}
+              {/* Experience Level */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">
                   Experience Level <span className="text-rose-500">*</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { level: 'Beginner', desc: '1 - 2 years experience', badge: 'Junior Specialist' },
-                    { level: 'Intermediate', desc: '3 - 5 years proven projects', badge: 'Mid-Senior' },
-                    { level: 'Expert', desc: '5+ years lead authority', badge: 'Top 1% Senior' }
+                    { level: 'Beginner', desc: '1–2 years of practical work', badge: 'Junior Specialist' },
+                    { level: 'Intermediate', desc: '3–5 years shipped projects', badge: 'Mid Specialist' },
+                    { level: 'Expert', desc: '6+ years proven leadership', badge: 'Top-Tier Specialist' }
                   ].map((exp) => (
                     <div
                       key={exp.level}
                       onClick={() => setExperienceLevel(exp.level)}
                       className={`p-4 rounded-2xl border-2 cursor-pointer transition-all ${
                         experienceLevel === exp.level
-                          ? 'border-brand-600 bg-brand-50/20 shadow-soft'
+                          ? 'border-brand-600 bg-brand-50/30 ring-2 ring-brand-500/10'
                           : 'border-slate-200 hover:border-slate-300'
                       }`}
                     >
@@ -428,39 +506,42 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
             </div>
           )}
 
-          {/* STEP 3: Professional Details */}
+          {/* STEP 3: Professional Details & Resume */}
           {currentStep === 3 && (
             <div className="space-y-6 animate-fadeIn">
               <div>
                 <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-                  Professional Details
+                  Professional Details & Resume
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                  Define your standard hourly billing rate and describe your craft to clients.
+                  Define your standard hourly billing rate in Indian Rupees and manage your verified CV.
                 </p>
               </div>
 
-              {/* Hourly Rate */}
+              {/* Hourly Rate (INR) */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                  Hourly Rate (USD) <span className="text-rose-500">*</span>
+                  Hourly Rate (INR ₹) <span className="text-rose-500">*</span>
                 </label>
                 <div className="flex items-center gap-4">
-                  <div className="relative w-44">
-                    <DollarSign className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <div className="relative w-48">
+                    <span className="text-lg font-black text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
+                      ₹
+                    </span>
                     <input
                       type="number"
-                      min="15"
-                      max="500"
+                      min="300"
+                      max="25000"
+                      step="50"
                       required
                       value={hourlyRate}
                       onChange={(e) => setHourlyRate(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 text-lg font-black text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white"
+                      className="w-full pl-9 pr-4 py-3 text-lg font-black text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white"
                     />
                   </div>
                   <span className="text-sm font-semibold text-slate-500">/ hour</span>
-                  <div className="hidden sm:block text-xs text-slate-400 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200">
-                    💡 Industry benchmark for {experienceLevel}: <strong>${experienceLevel === 'Expert' ? '85 - $150' : experienceLevel === 'Intermediate' ? '50 - $85' : '30 - $50'}/hr</strong>
+                  <div className="hidden sm:block text-xs text-slate-500 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200">
+                    💡 Benchmark for {experienceLevel}: <strong>₹{experienceLevel === 'Expert' ? '2,000 - ₹4,500' : experienceLevel === 'Intermediate' ? '1,200 - ₹2,000' : '600 - ₹1,200'}/hr</strong>
                   </div>
                 </div>
               </div>
@@ -483,6 +564,71 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
                   placeholder="Describe your background, core strengths, past impacts, and how you help teams build..."
                   className="w-full p-4 text-sm text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white leading-relaxed"
                 />
+              </div>
+
+              {/* Resume Upload / Verification Section */}
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <FileText className="w-4 h-4 text-brand-600" />
+                    <span>Attached Resume / CV</span>
+                    <span className="text-rose-500 font-bold">*</span>
+                  </label>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                    {resumeFile ? 'Verified Attached' : 'Upload Required'}
+                  </span>
+                </div>
+
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={(e) => e.target.files?.[0] && processResumeFile(e.target.files[0])}
+                  accept=".pdf,.doc,.docx"
+                  className="hidden"
+                />
+
+                {isUploadingResume && (
+                  <div className="p-3 bg-white rounded-xl border border-brand-200">
+                    <div className="flex justify-between text-xs font-bold text-brand-900 mb-1">
+                      <span>Uploading Resume...</span>
+                      <span>{resumeProgress}%</span>
+                    </div>
+                    <div className="w-full bg-brand-100 h-1.5 rounded-full overflow-hidden">
+                      <div className="bg-brand-600 h-full rounded-full transition-all" style={{ width: `${resumeProgress}%` }} />
+                    </div>
+                  </div>
+                )}
+
+                {!isUploadingResume && resumeFile && (
+                  <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5 truncate">
+                      <div className="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center shrink-0">
+                        <FileText className="w-4 h-4" />
+                      </div>
+                      <div className="truncate text-left">
+                        <p className="text-xs font-bold text-slate-900 truncate">{resumeFile.name}</p>
+                        <p className="text-[11px] text-slate-500">{resumeFile.formattedSize || '1.8 MB'} • Ready for client verification</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="px-2.5 py-1 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg shrink-0 flex items-center gap-1"
+                    >
+                      <RefreshCw className="w-3 h-3" /> Replace
+                    </button>
+                  </div>
+                )}
+
+                {!isUploadingResume && !resumeFile && (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="p-4 border-2 border-dashed border-slate-300 hover:border-brand-400 bg-white rounded-xl text-center cursor-pointer transition-colors"
+                  >
+                    <UploadCloud className="w-6 h-6 text-slate-400 mx-auto mb-1" />
+                    <p className="text-xs font-bold text-slate-800">Click to upload your resume (PDF or DOCX, max 5MB)</p>
+                  </div>
+                )}
               </div>
 
               {/* Portfolio URL */}
@@ -561,7 +707,7 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
                       Standard Rate
                     </span>
-                    <span className="text-2xl font-black text-slate-900">${hourlyRate}</span>
+                    <span className="text-2xl font-black text-slate-900">₹{Number(hourlyRate).toLocaleString('en-IN')}</span>
                     <span className="text-xs text-slate-500">/hr</span>
                   </div>
                 </div>
@@ -589,6 +735,20 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
                     ))}
                   </div>
                 </div>
+
+                {/* Resume Status */}
+                {resumeFile && (
+                  <div className="mb-4 p-3 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
+                      <FileText className="w-4 h-4 text-brand-600" />
+                      <span>{resumeFile.name}</span>
+                      <span className="text-slate-400 font-normal">({resumeFile.formattedSize})</span>
+                    </div>
+                    <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                      Resume Attached
+                    </span>
+                  </div>
+                )}
 
                 {/* Portfolio link */}
                 {portfolioUrl && (
@@ -628,7 +788,7 @@ export default function FreelancerOnboarding({ user, onComplete, onShowToast }) 
                   onClick={() => setCurrentStep(3)}
                   className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 px-3 py-1.5 rounded-lg"
                 >
-                  <Edit3 className="w-3 h-3" /> Edit Rate & Bio
+                  <Edit3 className="w-3 h-3" /> Edit Rate, Bio & Resume
                 </button>
               </div>
             </div>

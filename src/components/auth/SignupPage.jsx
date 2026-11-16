@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Eye, 
   EyeOff, 
@@ -14,7 +14,12 @@ import {
   User, 
   Building2,
   Code2,
-  X
+  X,
+  UploadCloud,
+  FileText,
+  Trash2,
+  RefreshCw,
+  CheckCircle2
 } from 'lucide-react';
 import { authStorage } from '../../utils/auth';
 
@@ -49,6 +54,13 @@ export default function SignupPage({ initialRole = 'client', onNavigate, onSignu
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  // Resume Upload State (Mandatory for Freelancers)
+  const [resumeFile, setResumeFile] = useState(null);
+  const [resumeProgress, setResumeProgress] = useState(0);
+  const [isUploadingResume, setIsUploadingResume] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const fileInputRef = useRef(null);
+
   // Password strength calculation
   const getPasswordStrength = () => {
     if (!password) return { score: 0, label: '', color: 'bg-slate-200' };
@@ -82,6 +94,102 @@ export default function SignupPage({ initialRole = 'client', onNavigate, onSignu
     }
   };
 
+  // Process chosen or dropped resume file
+  const processResumeFile = (file) => {
+    setError('');
+    if (!file) return;
+
+    // Validate type: PDF or DOC / DOCX
+    const validExtensions = ['.pdf', '.doc', '.docx'];
+    const lowerName = file.name.toLowerCase();
+    const isValidExt = validExtensions.some(ext => lowerName.endsWith(ext));
+    const isValidMime = [
+      'application/pdf', 
+      'application/msword', 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ].includes(file.type);
+
+    if (!isValidExt && !isValidMime) {
+      setError('Unsupported file type. Please upload a PDF or Word document (.pdf, .doc, .docx).');
+      return;
+    }
+
+    // Validate size: 5MB maximum
+    const maxSizeBytes = 5 * 1024 * 1024;
+    if (file.size > maxSizeBytes) {
+      setError(`File size exceeds 5 MB limit (${(file.size / (1024 * 1024)).toFixed(1)} MB). Please select a smaller resume.`);
+      return;
+    }
+
+    // Format size display
+    const formattedSize = file.size >= 1024 * 1024 
+      ? `${(file.size / (1024 * 1024)).toFixed(2)} MB` 
+      : `${Math.round(file.size / 1024)} KB`;
+
+    // Simulate progress indicator
+    setIsUploadingResume(true);
+    setResumeProgress(25);
+
+    const timer1 = setTimeout(() => {
+      setResumeProgress(70);
+    }, 150);
+
+    const timer2 = setTimeout(() => {
+      setResumeProgress(100);
+      setIsUploadingResume(false);
+      setResumeFile({
+        name: file.name,
+        size: file.size,
+        formattedSize,
+        type: file.type || 'application/pdf',
+        lastModified: file.lastModified || Date.now()
+      });
+      if (onShowToast) {
+        onShowToast(`Resume "${file.name}" uploaded successfully!`);
+      }
+    }, 400);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  };
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      processResumeFile(file);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      processResumeFile(file);
+    }
+  };
+
+  const handleRemoveResume = () => {
+    setResumeFile(null);
+    setResumeProgress(0);
+    setIsUploadingResume(false);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
@@ -96,9 +204,22 @@ export default function SignupPage({ initialRole = 'client', onNavigate, onSignu
       return;
     }
 
-    if (accountType === 'freelancer' && selectedSkills.length === 0) {
-      setError('Please select or add at least one primary skill.');
-      return;
+    if (accountType === 'freelancer') {
+      if (selectedSkills.length === 0) {
+        setError('Please select or add at least one primary skill.');
+        return;
+      }
+
+      // Mandatory Resume Upload Check for Freelancers
+      if (!resumeFile) {
+        setError('Mandatory requirement: Please upload your resume (PDF or DOC/DOCX, max 5MB) before creating your freelancer account.');
+        return;
+      }
+
+      if (isUploadingResume) {
+        setError('Please wait until your resume finishes uploading.');
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -114,6 +235,7 @@ export default function SignupPage({ initialRole = 'client', onNavigate, onSignu
           companyName: accountType === 'client' ? companyName.trim() : undefined,
           title: accountType === 'freelancer' ? finalRole : undefined,
           skills: accountType === 'freelancer' ? selectedSkills : [],
+          resume: accountType === 'freelancer' ? resumeFile : undefined,
           profileCompleted: false
         };
 
@@ -134,6 +256,11 @@ export default function SignupPage({ initialRole = 'client', onNavigate, onSignu
 
   // Google sign up simulation
   const handleGoogleSignup = () => {
+    if (accountType === 'freelancer' && !resumeFile) {
+      setError('Please upload your resume first before continuing with Google signup.');
+      return;
+    }
+
     setIsLoading(true);
     setTimeout(() => {
       const googleUser = authStorage.signup({
@@ -144,6 +271,7 @@ export default function SignupPage({ initialRole = 'client', onNavigate, onSignu
         companyName: accountType === 'client' ? 'Startup Labs' : undefined,
         title: accountType === 'freelancer' ? 'Senior Full-Stack Engineer' : undefined,
         skills: accountType === 'freelancer' ? ['React', 'Next.js', 'Figma'] : [],
+        resume: accountType === 'freelancer' ? (resumeFile || { name: 'Google_Applicant_Resume.pdf', formattedSize: '1.2 MB' }) : undefined,
         profileCompleted: false
       });
       setIsLoading(false);
@@ -311,7 +439,7 @@ export default function SignupPage({ initialRole = 'client', onNavigate, onSignu
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="e.g. Alex Mercer"
+                  placeholder="e.g. Rahul Sharma"
                   className="w-full pl-10 pr-4 py-3 text-sm text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 focus:bg-white transition-all"
                 />
               </div>
@@ -492,13 +620,133 @@ export default function SignupPage({ initialRole = 'client', onNavigate, onSignu
                     </button>
                   </div>
                 </div>
+
+                {/* ============================================================== */}
+                {/* MANDATORY RESUME UPLOAD SECTION (FOR FREELANCER ACCOUNT ONLY) */}
+                {/* ============================================================== */}
+                <div className="pt-2 border-t border-slate-100">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5 text-brand-600" />
+                      <span>Upload Resume / CV</span>
+                      <span className="text-rose-500 font-extrabold">*</span>
+                    </label>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200/70 px-2 py-0.5 rounded-full">
+                      Mandatory
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mb-2.5">
+                    Workora manually reviews all freelancer profiles. PDF or DOC/DOCX up to 5 MB required to create account.
+                  </p>
+
+                  {/* Hidden Real File Input */}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileInputChange}
+                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    className="hidden"
+                  />
+
+                  {/* STATE 1: UPLOADING PROGRESS */}
+                  {isUploadingResume && (
+                    <div className="p-4 rounded-2xl bg-brand-50/50 border border-brand-200/80 animate-pulse">
+                      <div className="flex items-center justify-between text-xs font-bold text-brand-900 mb-1.5">
+                        <span className="flex items-center gap-1.5">
+                          <RefreshCw className="w-3.5 h-3.5 animate-spin text-brand-600" />
+                          Uploading Resume...
+                        </span>
+                        <span>{resumeProgress}%</span>
+                      </div>
+                      <div className="w-full bg-brand-100 h-2 rounded-full overflow-hidden">
+                        <div 
+                          className="bg-brand-600 h-full transition-all duration-200 rounded-full"
+                          style={{ width: `${resumeProgress}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* STATE 2: UPLOADED FILE DISPLAY */}
+                  {!isUploadingResume && resumeFile && (
+                    <div className="p-3.5 rounded-2xl bg-brand-50/40 border border-brand-200/90 flex items-center justify-between gap-3 shadow-soft-sm">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                          <FileText className="w-5 h-5" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xs font-extrabold text-slate-900 truncate">
+                              {resumeFile.name}
+                            </span>
+                            <CheckCircle2 className="w-3.5 h-3.5 text-brand-600 shrink-0" />
+                          </div>
+                          <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium">
+                            <span>{resumeFile.formattedSize}</span>
+                            <span>•</span>
+                            <span className="text-brand-700 font-semibold">Verified Ready</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="px-2.5 py-1.5 text-[11px] font-bold text-slate-600 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 rounded-lg transition-colors flex items-center gap-1"
+                          title="Replace Resume"
+                        >
+                          <RefreshCw className="w-3 h-3" />
+                          <span>Replace</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleRemoveResume}
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                          title="Remove Resume"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* STATE 3: DROPZONE & UPLOAD BUTTON */}
+                  {!isUploadingResume && !resumeFile && (
+                    <div
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      onDrop={handleDrop}
+                      onClick={() => fileInputRef.current?.click()}
+                      className={`relative border-2 border-dashed rounded-2xl p-5 text-center cursor-pointer transition-all duration-200 flex flex-col items-center justify-center group ${
+                        isDragOver
+                          ? 'border-brand-500 bg-brand-50/40 ring-4 ring-brand-500/10'
+                          : 'border-slate-300 hover:border-brand-400 bg-slate-50/50 hover:bg-white'
+                      }`}
+                    >
+                      <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-brand-600 group-hover:border-brand-200 group-hover:shadow-sm transition-all mb-2">
+                        <UploadCloud className="w-6 h-6" />
+                      </div>
+                      <div className="text-xs font-bold text-slate-800 mb-0.5">
+                        <span className="text-brand-600 hover:underline">Click to upload</span> or drag and drop
+                      </div>
+                      <p className="text-[11px] text-slate-400">
+                        PDF, DOC or DOCX (Max 5 MB)
+                      </p>
+                      <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 text-[11px] font-bold shadow-soft-sm group-hover:border-brand-300 group-hover:text-brand-600 transition-colors">
+                        <FileText className="w-3 h-3 text-brand-600" />
+                        <span>Select Resume File</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || isUploadingResume}
               className="w-full mt-6 inline-flex items-center justify-center gap-2 py-3.5 px-5 text-sm font-bold text-white bg-slate-900 hover:bg-brand-600 rounded-xl shadow-soft hover:shadow-brand-glow transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed group"
             >
               {isLoading ? (

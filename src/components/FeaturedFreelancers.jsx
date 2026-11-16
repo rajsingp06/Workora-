@@ -155,7 +155,7 @@ export default function FeaturedFreelancers({
                       Hourly Rate
                     </span>
                     <span className="text-2xl font-black text-slate-900 tracking-tight">
-                      ${freelancer.hourlyRate}
+                      ₹{freelancer.hourlyRate.toLocaleString('en-IN')}
                     </span>
                     <span className="text-xs text-slate-500 font-medium">/hr</span>
                   </div>

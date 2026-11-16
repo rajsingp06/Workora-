@@ -7,7 +7,7 @@ import {
   User, 
   Layers, 
   FileText, 
-  DollarSign, 
+  IndianRupee, 
   Briefcase, 
   Sparkles, 
   CheckCircle2, 
@@ -35,10 +35,10 @@ const PROJECT_TYPES = [
 ];
 
 const BUDGET_RANGES = [
-  '$1,000 - $3,000',
-  '$3,000 - $10,000',
-  '$10,000 - $25,000',
-  '$25,000 - $50,000+'
+  '₹25,000 - ₹75,000',
+  '₹75,000 - ₹2,50,000',
+  '₹2,50,000 - ₹10,00,000',
+  '₹10,00,000+'
 ];
 
 export default function ClientOnboarding({ user, onComplete, onShowToast }) {

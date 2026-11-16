@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, MessageSquareCode, ShieldCheck, ArrowRight, UserCheck, Send, DollarSign, Sparkles } from 'lucide-react';
+import { Search, MessageSquareCode, ShieldCheck, ArrowRight, UserCheck, Send, IndianRupee, Sparkles } from 'lucide-react';
 
 export default function HowItWorks({ onOpenAuth }) {
   const [activeRole, setActiveRole] = useState('clients'); // 'clients' | 'freelancers'
@@ -53,8 +53,8 @@ export default function HowItWorks({ onOpenAuth }) {
       title: 'Get Paid on Time',
       tagline: 'Guaranteed Escrow & Global Payouts',
       description: 'Never chase an unpaid invoice again. Client funds are funded into escrow before you begin coding or designing.',
-      icon: DollarSign,
-      highlights: ['Guaranteed payment protection', 'Instant global withdrawals to Stripe/Bank', 'Build long-term recurring client partnerships'],
+      icon: IndianRupee,
+      highlights: ['Guaranteed payment protection', 'Instant UPI / Direct Bank transfer withdrawals', 'Build long-term recurring client partnerships'],
     },
   ];
 

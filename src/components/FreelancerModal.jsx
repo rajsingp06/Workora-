@@ -111,7 +111,7 @@ export default function FreelancerModal({ freelancer, onClose, onShowToast }) {
               <div className="text-right">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Rate</span>
                 <div className="text-xl font-black text-slate-900 leading-none">
-                  ${freelancer.hourlyRate}<span className="text-xs font-normal text-slate-500">/hr</span>
+                  ₹{freelancer.hourlyRate.toLocaleString('en-IN')}<span className="text-xs font-normal text-slate-500">/hr</span>
                 </div>
               </div>
             </div>
@@ -226,7 +226,7 @@ export default function FreelancerModal({ freelancer, onClose, onShowToast }) {
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Hourly Rate</span>
                   <div className="text-2xl font-black text-slate-900 leading-none">
-                    ${freelancer.hourlyRate}<span className="text-xs font-normal text-slate-500">/hr</span>
+                    ₹{freelancer.hourlyRate.toLocaleString('en-IN')}<span className="text-xs font-normal text-slate-500">/hr</span>
                   </div>
                 </div>
                 <div className="text-right">
@@ -265,10 +265,10 @@ export default function FreelancerModal({ freelancer, onClose, onShowToast }) {
                       onChange={(e) => setProjectBudget(e.target.value)}
                       className="w-full text-xs font-medium text-slate-800 bg-white border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-500"
                     >
-                      <option value="1k-3k">$1,000 - $3,000</option>
-                      <option value="3k-5k">$3,000 - $5,000</option>
-                      <option value="5k-10k">$5,000 - $10,000</option>
-                      <option value="10k+">$10,000+</option>
+                      <option value="10k-25k">₹10,000 - ₹25,000</option>
+                      <option value="25k-50k">₹25,000 - ₹50,000</option>
+                      <option value="50k-100k">₹50,000 - ₹1,00,000</option>
+                      <option value="100k+">₹1,00,000+</option>
                     </select>
                   </div>
 
