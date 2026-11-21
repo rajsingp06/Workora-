@@ -260,7 +260,7 @@ export default function Navbar({
                     title="View Profile Section & Dashboard"
                   >
                     <img
-                      src={currentUser.avatar || 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop'}
+                      src={currentUser.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80'}
                       alt={currentUser.fullName}
                       className="w-7 h-7 rounded-full object-cover ring-1 ring-slate-200 group-hover:ring-emerald-400"
                     />
@@ -299,7 +299,7 @@ export default function Navbar({
                       className="w-full text-left flex items-center gap-3 p-2.5 bg-slate-50 hover:bg-emerald-50/60 rounded-xl mb-2 transition-colors group cursor-pointer border border-transparent hover:border-emerald-200"
                     >
                       <img
-                        src={currentUser.avatar || 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop'}
+                        src={currentUser.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80'}
                         alt={currentUser.fullName}
                         className="w-10 h-10 rounded-full object-cover ring-1 ring-slate-200 group-hover:ring-emerald-400"
                       />
@@ -444,7 +444,7 @@ export default function Navbar({
               <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center justify-between">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <img
-                    src={currentUser.avatar || 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop'}
+                    src={currentUser.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80'}
                     alt={currentUser.fullName}
                     className="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200"
                   />

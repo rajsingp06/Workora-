@@ -75,7 +75,7 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
             <div className="flex items-center gap-3 pl-2 sm:pl-3 sm:border-l border-slate-200">
               <div className="relative">
                 <img
-                  src={user?.avatar || 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop'}
+                  src={user?.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80'}
                   alt={user?.fullName || 'User'}
                   className="w-9 h-9 rounded-xl object-cover ring-2 ring-slate-100"
                 />
@@ -114,7 +114,7 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex items-center gap-5">
               <img
-                src={user?.avatar || 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop'}
+                src={user?.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80'}
                 alt={user?.fullName}
                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-4 ring-slate-50 shadow-soft"
               />
@@ -445,7 +445,7 @@ export default function Dashboard({ user, onNavigate, onLogout, onEditProfile, o
                       role: 'Lead Product & UX Designer',
                       rate: '₹1,850/hr',
                       rating: 4.98,
-                      avatar: 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
+                      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80',
                       skills: ['Figma', 'Design Systems', 'SaaS UX']
                     },
                     {

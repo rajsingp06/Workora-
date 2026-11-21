@@ -5,7 +5,7 @@ export const featuredFreelancersData = [
     name: 'Priya Nair',
     title: 'Lead Product & UX Designer',
     category: 'ui-ux',
-    avatar: 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
     coverImage: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
     location: 'Bengaluru, Karnataka',
     hourlyRate: 1850,

@@ -145,7 +145,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenAuth }) {
               {/* Freelancer Profile Image & Info */}
               <div className="relative mb-5 rounded-2xl overflow-hidden aspect-[4/3] bg-slate-100">
                 <img
-                  src="https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop"
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=80"
                   alt="Priya Nair - Lead Product Designer"
                   className="w-full h-full object-cover"
                 />
@@ -202,7 +202,7 @@ export default function Hero({ onSearch, onSelectCategory, onOpenAuth }) {
             {/* Secondary Floating Card: Local Service Pro (Equal Importance for Local Professionals!) */}
             <div className="absolute -bottom-6 -left-4 sm:-bottom-8 sm:-left-6 z-20 bg-white rounded-2xl p-3.5 shadow-lg border border-slate-200 hidden sm:flex items-center gap-3 max-w-[280px]">
               <img
-                src="https://images.pexels.com/photos/34685880/pexels-photo-34685880/free-photo-of-smiling-mustached-man-in-delhi-street-scene.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop"
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
                 alt="Rahul Sharma - Residential Plumber"
                 className="w-12 h-12 rounded-xl object-cover ring-1 ring-slate-200"
               />

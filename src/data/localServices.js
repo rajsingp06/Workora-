@@ -112,7 +112,7 @@ export const localProvidersData = [
     name: 'Rahul Sharma',
     profession: 'Residential Plumber',
     category: 'plumbers',
-    avatar: 'https://images.pexels.com/photos/34685880/pexels-photo-34685880/free-photo-of-smiling-mustached-man-in-delhi-street-scene.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     coverImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80',
     rating: 4.92,
     reviewsCount: 148,
