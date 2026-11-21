@@ -195,14 +195,6 @@ export default function Navbar({
               )}
             </div>
 
-            {/* Find Freelancers */}
-            <button
-              onClick={() => handleNavClick('featured-freelancers')}
-              className="px-3 py-2 text-xs xl:text-sm font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors whitespace-nowrap"
-            >
-              Find Freelancers
-            </button>
-
             {/* Local Services */}
             <button
               onClick={() => handleNavClick('local-services')}
@@ -416,12 +408,6 @@ export default function Navbar({
               className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-slate-50"
             >
               Explore Categories
-            </button>
-            <button
-              onClick={() => handleNavClick('featured-freelancers')}
-              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-slate-50"
-            >
-              Find Freelancers
             </button>
             <button
               onClick={() => handleNavClick('local-services')}
