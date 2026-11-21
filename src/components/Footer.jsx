@@ -136,6 +136,11 @@ export default function Footer({ onNavigate, onOpenAuth }) {
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-600">
               <li>
+                <button onClick={() => onNavigate('quick-gigs')} className="hover:text-emerald-600 transition-colors font-bold text-amber-700">
+                  Quick Gigs (Earn Locally) ⚡
+                </button>
+              </li>
+              <li>
                 <button onClick={() => onOpenAuth('signup', 'freelancer')} className="hover:text-emerald-600 transition-colors font-bold text-emerald-700">
                   Join as a Specialist
                 </button>

@@ -23,6 +23,12 @@ import WorkoraPro from './components/WorkoraPro';
 import LocalServicesHomepageSection from './components/LocalServicesHomepageSection';
 import SuccessStories from './components/SuccessStories';
 
+// Quick Gigs Hyperlocal Components
+import QuickGigsHomepageSection from './components/QuickGigsHomepageSection';
+import QuickGigsPage from './components/quickgigs/QuickGigsPage';
+import QuickGigDetailsModal from './components/quickgigs/QuickGigDetailsModal';
+import QuickGigApplyModal from './components/quickgigs/QuickGigApplyModal';
+
 // Phase 03 Local Services Components
 import LocalServicesPage from './components/local/LocalServicesPage';
 import LocationModal from './components/local/LocationModal';
@@ -31,10 +37,14 @@ import BookingModal from './components/local/BookingModal';
 import { locationService } from './utils/location';
 
 export default function App() {
-  // Navigation View State: 'landing' | 'local-services' | 'login' | 'signup' | 'onboarding-freelancer' | 'onboarding-client' | 'dashboard'
+  // Navigation View State: 'landing' | 'local-services' | 'quick-gigs' | 'login' | 'signup' | 'onboarding-freelancer' | 'onboarding-client' | 'dashboard'
   const [currentView, setCurrentView] = useState('landing');
   const [signupRole, setSignupRole] = useState('client');
   const [currentUser, setCurrentUser] = useState(null);
+
+  // Quick Gigs States
+  const [selectedQuickGig, setSelectedQuickGig] = useState(null);
+  const [applyQuickGig, setApplyQuickGig] = useState(null);
 
   // Local Services States
   const [userLocation, setUserLocation] = useState(locationService.getLocation());
@@ -57,6 +67,7 @@ export default function App() {
       const hash = window.location.hash.replace('#/', '').replace('#', '');
       const validViews = [
         'local-services',
+        'quick-gigs',
         'login',
         'signup',
         'onboarding-freelancer',
@@ -161,8 +172,8 @@ export default function App() {
   };
 
   const handleNavigateSection = (sectionId) => {
-    if (sectionId === 'local-services') {
-      navigateTo('local-services');
+    if (sectionId === 'local-services' || sectionId === 'quick-gigs') {
+      navigateTo(sectionId);
       return;
     }
     if (sectionId === 'dashboard' || sectionId === 'profile') {
@@ -287,6 +298,15 @@ export default function App() {
             onOpenBooking={(p) => setBookingProvider(p)}
             onShowToast={(msg) => setToastMessage(msg)}
           />
+        ) : currentView === 'quick-gigs' ? (
+          /* QUICK GIGS HYPERLOCAL DISCOVERY PAGE */
+          <QuickGigsPage
+            userLocation={userLocation}
+            onOpenLocationModal={() => setIsLocationModalOpen(true)}
+            onSelectGig={(g) => setSelectedQuickGig(g)}
+            onOpenApply={(g) => setApplyQuickGig(g)}
+            onShowToast={(msg) => setToastMessage(msg)}
+          />
         ) : (
           /* DIGITAL SERVICES LANDING PAGE */
           <>
@@ -313,6 +333,15 @@ export default function App() {
               onOpenLocationModal={() => setIsLocationModalOpen(true)}
               onSelectProvider={(p) => setSelectedLocalProvider(p)}
               onOpenBooking={(p) => setBookingProvider(p)}
+              onNavigate={handleNavigateSection}
+              onShowToast={(msg) => setToastMessage(msg)}
+            />
+
+            <QuickGigsHomepageSection
+              userLocation={userLocation}
+              onOpenLocationModal={() => setIsLocationModalOpen(true)}
+              onSelectGig={(g) => setSelectedQuickGig(g)}
+              onOpenApply={(g) => setApplyQuickGig(g)}
               onNavigate={handleNavigateSection}
               onShowToast={(msg) => setToastMessage(msg)}
             />
@@ -348,6 +377,22 @@ export default function App() {
       <FreelancerModal
         freelancer={selectedFreelancer}
         onClose={() => setSelectedFreelancer(null)}
+        onShowToast={(msg) => setToastMessage(msg)}
+      />
+
+      {/* Quick Gig Details Modal */}
+      <QuickGigDetailsModal
+        gig={selectedQuickGig}
+        onClose={() => setSelectedQuickGig(null)}
+        onOpenApply={(g) => setApplyQuickGig(g)}
+        onShowToast={(msg) => setToastMessage(msg)}
+      />
+
+      {/* Quick Gig 1-Minute Apply Modal */}
+      <QuickGigApplyModal
+        gig={applyQuickGig}
+        currentUser={currentUser}
+        onClose={() => setApplyQuickGig(null)}
         onShowToast={(msg) => setToastMessage(msg)}
       />
 

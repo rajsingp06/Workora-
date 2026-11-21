@@ -67,8 +67,8 @@ export default function Navbar({
     setIsMobileMenuOpen(false);
     setIsCategoriesDropdownOpen(false);
 
-    if (target === 'local-services') {
-      onNavigate('local-services');
+    if (target === 'local-services' || target === 'quick-gigs') {
+      onNavigate(target);
       return;
     }
 
@@ -215,6 +215,22 @@ export default function Navbar({
               <span>Local Services</span>
               <span className="text-[9px] uppercase font-black bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded-full">
                 Nearby
+              </span>
+            </button>
+
+            {/* Workora Quick Gigs */}
+            <button
+              onClick={() => handleNavClick('quick-gigs')}
+              className={`px-3 py-2 text-xs xl:text-sm font-semibold rounded-lg transition-colors whitespace-nowrap flex items-center gap-1.5 ${
+                currentView === 'quick-gigs'
+                  ? 'text-emerald-700 bg-emerald-50 font-bold'
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              <span>Quick Gigs</span>
+              <span className="text-[9px] uppercase font-black bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                <Zap className="w-2.5 h-2.5 fill-amber-500 text-amber-600" />
+                <span>Earn</span>
               </span>
             </button>
 
@@ -412,6 +428,13 @@ export default function Navbar({
               className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold text-emerald-700 bg-emerald-50"
             >
               Local Services (Doorstep)
+            </button>
+            <button
+              onClick={() => handleNavClick('quick-gigs')}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-bold text-amber-900 bg-amber-50 flex items-center justify-between"
+            >
+              <span>Quick Gigs (Earn Locally)</span>
+              <span className="text-[10px] font-black uppercase bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full">New</span>
             </button>
             <button
               onClick={() => handleNavClick('workora-pro')}
