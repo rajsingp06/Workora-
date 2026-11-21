@@ -42,11 +42,11 @@ const SKILL_CATEGORIES = {
 };
 
 const AVATAR_PRESETS = [
-  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
-  'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80',
-  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80',
-  'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=300&q=80'
+  'https://images.pexels.com/photos/29852852/pexels-photo-29852852/free-photo-of-professional-studio-portrait-of-woman.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
+  'https://images.pexels.com/photos/37605831/pexels-photo-37605831/free-photo-of-professional-portrait-of-a-businessman-in-formal-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
+  'https://images.pexels.com/photos/17329048/pexels-photo-17329048/free-photo-of-portrait-of-woman-in-shirt.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
+  'https://images.pexels.com/photos/38889923/pexels-photo-38889923/free-photo-of-professional-portrait-of-a-businessman.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
+  'https://images.pexels.com/photos/33646670/pexels-photo-33646670/free-photo-of-professional-woman-in-business-attire-portrait.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop'
 ];
 
 export default function FreelancerOnboarding({ user, onComplete, onShowToast }) {

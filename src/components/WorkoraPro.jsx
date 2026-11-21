@@ -22,7 +22,7 @@ export default function WorkoraPro({ onSelectFreelancer, onExplorePro }) {
       rate: '₹1,850/hr',
       rating: 4.98,
       reviews: 142,
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80',
+      avatar: 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
       highlight: 'Ex-fintech UX Lead • Built design systems for 80+ engineering teams',
       metric: '+42% User Retention on SaaS Redesign',
       skills: ['Figma Tokens', 'SaaS UX', 'Design Systems', 'Prototyping']
@@ -35,7 +35,7 @@ export default function WorkoraPro({ onSelectFreelancer, onExplorePro }) {
       rate: '₹3,500/hr',
       rating: 5.0,
       reviews: 92,
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+      avatar: 'https://images.pexels.com/photos/17454597/pexels-photo-17454597/free-photo-of-elderly-man-in-hat.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
       highlight: 'PhD in Computer Science • Enterprise private LLMs & RAG architectures',
       metric: 'Zero-hallucination legal AI pipeline',
       skills: ['LangChain', 'Python', 'Vector DB', 'Fine-tuning']
@@ -48,7 +48,7 @@ export default function WorkoraPro({ onSelectFreelancer, onExplorePro }) {
       rate: '₹2,500/hr',
       rating: 5.0,
       reviews: 156,
-      avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&q=80',
+      avatar: 'https://images.pexels.com/photos/29679657/pexels-photo-29679657/free-photo-of-portrait-of-man-in-traditional-orange-turban.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
       highlight: 'Built architectures handling 1M+ daily active users on AWS Serverless',
       metric: '99.99% uptime during festive peaks',
       skills: ['Next.js', 'Node.js', 'PostgreSQL', 'AWS Serverless']

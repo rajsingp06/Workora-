@@ -19,7 +19,7 @@ const DEFAULT_USERS = [
       budgetRange: '₹2,50,000 - ₹10,00,000',
       keySkills: ['Computer Vision', 'React', 'Python', 'ROS2']
     },
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
+    avatar: 'https://images.pexels.com/photos/36535613/pexels-photo-36535613/free-photo-of-professional-black-and-white-male-portrait.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
     profileCompleted: true,
     createdAt: new Date('2026-01-15').toISOString()
   },
@@ -41,7 +41,7 @@ const DEFAULT_USERS = [
       type: 'application/pdf'
     },
     portfolioUrl: 'https://dribbble.com',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80',
+    avatar: 'https://images.pexels.com/photos/38281680/pexels-photo-38281680/free-photo-of-portrait-of-woman-in-traditional-indian-attire.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=1&fit=crop',
     profileCompleted: true,
     createdAt: new Date('2026-02-10').toISOString()
   }
